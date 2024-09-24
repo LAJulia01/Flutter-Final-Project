@@ -6,7 +6,7 @@ class Test extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('feature'),
+      appBar: AppBar(title: const Text('graduate'),
       ),
       
     );
