@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:module2_4_lab_exercise/views/Widget/style.dart';
-import 'package:module2_4_lab_exercise/views/register_page.dart';
+import 'package:module2_4_lab_exercise/views/file_page1.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatelessWidget {
+  const RegisterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +28,9 @@ class LoginPage extends StatelessWidget {
           ),
         );
 
-    TextEditingController emailController = TextEditingController();
+    TextEditingController firstName = TextEditingController();
     TextEditingController passwordController = TextEditingController();
+    TextEditingController confiirmPassword = TextEditingController();
     return Scaffold(
       body: Container(
           margin: const EdgeInsets.symmetric(horizontal: 52, vertical: 47),
@@ -45,19 +46,25 @@ class LoginPage extends StatelessWidget {
               const SizedBox(
                 height: 100,
               ),
-              customTextfield(emailController, 'Email', false),
+              customTextfield(firstName, 'Firstname', false),
               const SizedBox(
                 height: 25,
               ),
               customTextfield(passwordController, 'Password', true),
               const SizedBox(
+                height: 25,
+              ),
+              customTextfield(confiirmPassword, 'Confirm Password', true),
+              const SizedBox(
                 height: 40,
               ),
-              customElevetedbtn('LOGIN', () {}),
+              customElevetedbtn('REGISTER', () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const FilePage1()));
+              }),
               const SizedBox(
-                height: 20,
+                height: 30,
               ),
-              OrDivider(),
               const Text(
                 'Login using',
                 style: TextStyle(
@@ -69,10 +76,7 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 20,
-              ),
-              const SizedBox(
-                height: 10,
+                height: 30,
               ),
               InkWell(
                 child: buildSocialButton(Icons.mail, Colors.pink, 'Google'),
@@ -85,46 +89,17 @@ class LoginPage extends StatelessWidget {
                     buildSocialButton(Icons.facebook, Colors.blue, 'Facebook'),
               ),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
               footerTitle(
                 () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const RegisterPage()));
+                  Navigator.pop(context);
                 },
-                'Dont Have An Account?',
-                'Register',
+                'Already Have An Account',
+                'Sign In',
               ),
             ],
           )),
-    );
-  }
-}
-
-class OrDivider extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 20),
-      child: Row(
-        children: [
-          buildDivider(),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10),
-            child: Text(
-              "OR",
-              style: TextStyle(fontWeight: FontWeight.w600),
-            ),
-          ),
-          buildDivider(),
-        ],
-      ),
-    );
-  }
-
-  Expanded buildDivider() {
-    return const Expanded(
-      child: Divider(),
     );
   }
 }
