@@ -5,6 +5,9 @@
 
 A new Flutter project.
 
+IMPORTANT NOTICE!!!!!!!!@!
+Before comiiting make sure to create a BRANCH so that the MAIN will not be changed, Only 1 can pull the request or ask.
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
