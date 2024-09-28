@@ -41,7 +41,7 @@ class LoginScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => RegisterScreen()),
+                      MaterialPageRoute(builder: (context) => const RegisterScreen()),
                     );
                   },
                   style: TextButton.styleFrom(
@@ -57,17 +57,17 @@ class LoginScreen extends StatelessWidget {
             const SizedBox(height: 20),
 
             // Wrap each TextField in a Container
-            Container(
+            const SizedBox(
               width: 300, // Set the desired width here
-              child: const TextField(
+              child: TextField(
                 decoration: InputDecoration(labelText: 'Email'),
               ),
             ),
             const SizedBox(height: 10), // Add space between fields
 
-            Container(
+            const SizedBox(
               width: 300,
-              child: const TextField(
+              child: TextField(
                 obscureText: true,
                 decoration: InputDecoration(labelText: 'Password'),
               ),
@@ -77,7 +77,7 @@ class LoginScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFFFC8DD), // Background color
+                backgroundColor: const Color(0xFFFFC8DD), // Background color
                 minimumSize: const Size(300, 50), // Width: 2000, Height: 50
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(2.0),

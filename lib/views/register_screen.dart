@@ -40,7 +40,7 @@ class RegisterScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => RegisterScreen()),
+                      MaterialPageRoute(builder: (context) => const RegisterScreen()),
                     );
                   },
                   style: TextButton.styleFrom(
@@ -54,33 +54,33 @@ class RegisterScreen extends StatelessWidget {
 
             // End row of login and register
 
-            Container(
+            const SizedBox(
               width: 300, // Set the desired width here
-              child: const TextField(
+              child: TextField(
                 decoration: InputDecoration(labelText: 'First Name'),
               ),
             ),
             const SizedBox(height: 10), // Add space between fields
 
-            Container(
+            const SizedBox(
               width: 300,
-              child: const TextField(
+              child: TextField(
                 decoration: InputDecoration(labelText: 'Last Name'),
               ),
             ),
             const SizedBox(height: 10),
 
-            Container(
+            const SizedBox(
               width: 300,
-              child: const TextField(
+              child: TextField(
                 decoration: InputDecoration(labelText: 'Email'),
               ),
             ),
             const SizedBox(height: 10),
 
-            Container(
+            const SizedBox(
               width: 300,
-              child: const TextField(
+              child: TextField(
                 obscureText: true,
                 decoration: InputDecoration(labelText: 'Contact NO'),
               ),
@@ -88,9 +88,9 @@ class RegisterScreen extends StatelessWidget {
 
             const SizedBox(height: 20),
 
-            Container(
+            const SizedBox(
               width: 300,
-              child: const TextField(
+              child: TextField(
                 obscureText: true,
                 decoration: InputDecoration(labelText: 'Password'),
               ),
