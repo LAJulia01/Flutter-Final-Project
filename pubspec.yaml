@@ -18,6 +18,8 @@ dependencies:
   geolocator: ^13.0.1
   foundation: ^0.0.5
   logger: ^2.4.0
+  location: ^7.0.1
+  lib: ^0.0.3
 
 dev_dependencies:
   flutter_test:
