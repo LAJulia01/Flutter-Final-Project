@@ -11,13 +11,20 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
+  dio: ^5.7.0
+  flutter_polyline_points: ^2.1.0
+  flutter_map: ^7.0.2
   google_maps_flutter: ^2.2.5
-  geolocator: ^9.0.2
+  geolocator: ^13.0.1
+  foundation: ^0.0.5
+  logger: ^2.4.0
+  location: ^7.0.1
+  lib: ^0.0.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
 
 flutter:
   uses-material-design: true

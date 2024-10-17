@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:module2_4_lab_exercise/views/location_screen.dart';
+import 'package:module2_4_lab_exercise/views/location_mapscreen.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -12,12 +13,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Social Media Clone',
+      title: 'Nanny Cares',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const GoogleMapsPage(),
+      home: const MapPage(),
     );
   }
 }
