@@ -3,13 +3,15 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 
 class GoogleMapsPage extends StatefulWidget {
+  const GoogleMapsPage({super.key});
+
   @override
-  _GoogleMapsPageState createState() => _GoogleMapsPageState();
+  GoogleMapsPageState createState() => GoogleMapsPageState();
 }
 
-class _GoogleMapsPageState extends State<GoogleMapsPage> {
+class GoogleMapsPageState extends State<GoogleMapsPage> {
   late GoogleMapController mapController;
-  LatLng _initialPosition = LatLng(14.5995, 120.9842); // Default location (Manila)
+  LatLng _initialPosition = const LatLng(14.5995, 120.9842); // Default location (Manila)
   Position? _currentPosition;
 
   @override
@@ -18,6 +20,7 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     _getCurrentLocation();
   }
 
+  // Get the current location of the user
   Future<void> _getCurrentLocation() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -25,32 +28,50 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     // Check if location services are enabled
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      // If location services are not enabled, ask the user to enable them
-      return Future.error('Location services are disabled.');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Location services are disabled.')),
+        );
+      }
+      return;
     }
 
+    // Check and request permission
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied.');
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Location permissions are denied.')),
+          );
+        }
+        return;
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      // If permissions are denied forever, inform the user
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+              content: Text(
+                  'Location permissions are permanently denied, we cannot request permissions.')),
+        );
+      }
+      return;
     }
 
-    // Get current location
+    // Get the current location and update the map
     _currentPosition = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
+      desiredAccuracy: LocationAccuracy.high,
+    );
 
-    setState(() {
-      _initialPosition =
-          LatLng(_currentPosition!.latitude, _currentPosition!.longitude);
-    });
+    if (mounted) {
+      setState(() {
+        _initialPosition =
+            LatLng(_currentPosition!.latitude, _currentPosition!.longitude);
+      });
+    }
   }
 
   void _onMapCreated(GoogleMapController controller) {
@@ -61,19 +82,17 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Google Maps Location'),
+        title: const Text('Google Maps Location'),
       ),
-      body: _initialPosition == null
-          ? Center(child: CircularProgressIndicator())
-          : GoogleMap(
-              onMapCreated: _onMapCreated,
-              initialCameraPosition: CameraPosition(
-                target: _initialPosition,
-                zoom: 14.0,
-              ),
-              myLocationEnabled: true,
-              myLocationButtonEnabled: true,
-            ),
+      body: GoogleMap(
+        onMapCreated: _onMapCreated,
+        initialCameraPosition: CameraPosition(
+          target: _initialPosition,
+          zoom: 14.0,
+        ),
+        myLocationEnabled: true, // Shows user's current location on the map
+        myLocationButtonEnabled: true, // Adds a button to return to the current location
+      ),
     );
   }
 }

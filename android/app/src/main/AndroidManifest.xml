@@ -1,14 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<uses-permission android:name="android.permission.INTERNET"/>
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+<meta-data  android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyA0sXESijjOwTPd36VpHJY_nzE3-eidz98" />
 
     <application
         android:label="module2_4_lab_exercise"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
-        <meta-data
-   android:name="com.google.android.geo.API_KEY"
-   android:value="AIzaSyA0sXESijjOwTPd36VpHJY_nzE3-eidz98" />
+
 
         <activity
             android:name=".MainActivity"
