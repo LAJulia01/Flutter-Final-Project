@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:module2_4_lab_exercise/views/location_mapscreen.dart';
+import 'package:module2_4_lab_exercise/views/login_screen.dart';
 import 'package:module2_4_lab_exercise/views/maps.dart';
+import 'package:module2_4_lab_exercise/views/support_screen.dart';
 
 
 
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const App(),
+      home: const GoogleMapsPage(),
     );
   }
 }
