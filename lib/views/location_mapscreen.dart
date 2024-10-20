@@ -58,7 +58,7 @@ class GoogleMapsPageState extends State<GoogleMapsPage> {
       locationSettings: const LocationSettings(
         accuracy: LocationAccuracy.high,
       ),
-    );
+    );  
 
     if (!mounted) return;
     setState(() {
