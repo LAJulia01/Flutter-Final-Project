@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:module2_4_lab_exercise/models/file_page1.dart';
 
 class CustomButton extends StatefulWidget {
-  const CustomButton({super.key, required this.text});
+  const CustomButton({super.key, required this.text, required void Function() onPressed});
 
   final String text;
 
