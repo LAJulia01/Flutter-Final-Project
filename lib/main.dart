@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:module2_4_lab_exercise/models/loginpage.dart';
+import 'package:module2_4_lab_exercise/utils/Authen_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: false,
       ),
-      home:  LoginPage(),
+      home: const AuthenticationScreen(),
     );
   }
 }
