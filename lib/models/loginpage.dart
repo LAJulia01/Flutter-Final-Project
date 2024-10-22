@@ -39,9 +39,6 @@ class _LoginPageState extends State<LoginPage> {
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController1 = TextEditingController();
     return Scaffold(
-      appBar: AppBar(
-        title: Text(''),
-      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

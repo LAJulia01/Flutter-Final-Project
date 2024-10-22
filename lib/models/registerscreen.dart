@@ -72,9 +72,6 @@ class _RegisterPageState extends State<RegisterPage> {
         );
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Register'),
-      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -163,11 +160,13 @@ class _RegisterPageState extends State<RegisterPage> {
                 const OrDivider(),
                 const SizedBox(height: 10),
                 InkWell(
+                    child: buildSocialButton(
+                        Icons.facebook, Colors.blue, 'FACEBOOK')),
+                const SizedBox(height: 20),
+                InkWell(
                     child: buildSocialButton(Icons.mail, Colors.pink, 'GOOGLE')),
                 const SizedBox(height: 10),
-                InkWell(
-                    child: buildSocialButton(Icons.facebook, Colors.blue, 'FACEBOOK')),
-                const SizedBox(height: 20),
+
                 footerTitle(() {
                   // Navigate to the LoginPage
                   Navigator.push(
@@ -190,7 +189,7 @@ class OrDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 100),
+      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 200),
       child: Row(
         children: [
           buildDivider(),
