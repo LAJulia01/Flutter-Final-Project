@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:module2_4_lab_exercise/firebaseconnection.dart';
+import 'package:module2_4_lab_exercise/utils/authen_page.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:module2_4_lab_exercise/models/loginpage.dart';
 import 'firebase_options.dart';
 
 void main() async{
@@ -19,12 +19,12 @@ class MyApp extends StatelessWidget {
  Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter with Firebase Demo',
+      title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: false,
       ),
-      home: const LoginPage(),
+      home: const FireCon(),
     );
   }
 }
