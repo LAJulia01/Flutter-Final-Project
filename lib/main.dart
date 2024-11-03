@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:module2_4_lab_exercise/firebaseconnection.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:module2_4_lab_exercise/models/location_mapscreen.dart';
 import 'package:module2_4_lab_exercise/models/loginpage.dart';
 import 'firebase_options.dart';
 
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         colorSchemeSeed: Color(0xffFFC1CC),
         useMaterial3: true,
       ),
-      home: const LoginPage(),
+      home: const GoogleMapsPage(),
     );
   }
 }

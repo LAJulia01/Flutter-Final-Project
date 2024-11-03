@@ -30,4 +30,6 @@ mixin GlobalStyles {
 
   static const primaryColor = Color.fromARGB(255, 255, 255, 1);
   static const secondaryColor = Color.fromARGB(255, 255, 255, 1);
+
+  var deepRose;
 }

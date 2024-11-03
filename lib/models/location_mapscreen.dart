@@ -6,7 +6,7 @@ import 'package:module2_4_lab_exercise/views/support_screen.dart';
 
 class GoogleMapsPage extends StatefulWidget {
   const GoogleMapsPage({super.key});
-
+  
   @override
   GoogleMapsPageState createState() => GoogleMapsPageState();
 }
@@ -24,33 +24,16 @@ class GoogleMapsPageState extends State<GoogleMapsPage> {
 
   /// Determines the user's current position and updates the map location.
   Future<void> _determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
+    if (!await _checkLocationService()) return;
 
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      _showSnackBar('Location services are disabled.');
-      return;
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        _showSnackBar('Location permissions are denied.');
-        return;
-      }
-    }
-
+    LocationPermission permission = await _checkLocationPermission();
     if (permission == LocationPermission.deniedForever) {
       _showSnackBar('Location permissions are permanently denied.');
       return;
     }
 
     final currentPosition = await Geolocator.getCurrentPosition(
-      locationSettings: const LocationSettings(
-        accuracy: LocationAccuracy.high,
-      ),
+      locationSettings: const LocationSettings(accuracy: LocationAccuracy.high),
     );
 
     if (mounted) {
@@ -59,21 +42,34 @@ class GoogleMapsPageState extends State<GoogleMapsPage> {
     }
   }
 
+  /// Checks if the location service is enabled.
+  Future<bool> _checkLocationService() async {
+    if (!await Geolocator.isLocationServiceEnabled()) {
+      _showSnackBar('Location services are disabled.');
+      return false;
+    }
+    return true;
+  }
+
+  /// Checks and requests location permissions.
+  Future<LocationPermission> _checkLocationPermission() async {
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+    }
+    return permission;
+  }
+
   /// Moves the camera to the provided position.
   void _moveCameraToPosition(Position position) {
     final currentLatLng = LatLng(position.latitude, position.longitude);
-
-    _mapController.animateCamera(
-      CameraUpdate.newLatLng(currentLatLng),
-    );
+    _mapController.animateCamera(CameraUpdate.newLatLng(currentLatLng));
   }
 
   /// Shows a snack bar with the specified message.
   void _showSnackBar(String message) {
     if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(message)),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
     }
   }
 
@@ -88,9 +84,8 @@ class GoogleMapsPageState extends State<GoogleMapsPage> {
     );
 
     setState(() {
-      _markers
-        ..clear()
-        ..add(marker);
+      _markers.clear(); // Clear previous markers
+      _markers.add(marker); // Add new marker
     });
   }
 
@@ -130,13 +125,17 @@ class GoogleMapsPageState extends State<GoogleMapsPage> {
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: customBtn('Next', () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => const Support(),
-                  ),
-                );
-              }),
+              child: SizedBox(
+                width: 368,
+                height: 56,
+                child: customBtn('Next', () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => const Support(),
+                    ),
+                  );
+                }),
+              ),
             ),
           ),
         ],
