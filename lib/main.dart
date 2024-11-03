@@ -19,10 +19,10 @@ class MyApp extends StatelessWidget {
  Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter with Firebase Demo',
+      title: 'Nanny Cares',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: false,
+        colorSchemeSeed: Color(0xffFFC1CC),
+        useMaterial3: true,
       ),
       home: const LoginPage(),
     );

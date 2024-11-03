@@ -13,8 +13,7 @@ class GoogleMapsPage extends StatefulWidget {
 
 class GoogleMapsPageState extends State<GoogleMapsPage> {
   late GoogleMapController _mapController;
-  LatLng _initialPosition = const LatLng(7.30870680, 125.68411780); // Default location
-  Position? _currentPosition;
+  final LatLng _initialPosition = const LatLng(7.30870680, 125.68411780);
   final Set<Marker> _markers = {};
 
   @override
@@ -28,14 +27,12 @@ class GoogleMapsPageState extends State<GoogleMapsPage> {
     bool serviceEnabled;
     LocationPermission permission;
 
-    // Check if location services are enabled
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       _showSnackBar('Location services are disabled.');
       return;
     }
 
-    // Request location permissions
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
@@ -50,7 +47,6 @@ class GoogleMapsPageState extends State<GoogleMapsPage> {
       return;
     }
 
-    // Get the current location and update the map position
     final currentPosition = await Geolocator.getCurrentPosition(
       locationSettings: const LocationSettings(
         accuracy: LocationAccuracy.high,
@@ -58,15 +54,18 @@ class GoogleMapsPageState extends State<GoogleMapsPage> {
     );
 
     if (mounted) {
-      setState(() {
-        _currentPosition = currentPosition;
-        _initialPosition = LatLng(currentPosition.latitude, currentPosition.longitude);
-        _updateMarker();
-        _mapController.animateCamera(
-          CameraUpdate.newLatLng(_initialPosition),
-        );
-      });
+      _moveCameraToPosition(currentPosition);
+      _updateMarker(currentPosition);
     }
+  }
+
+  /// Moves the camera to the provided position.
+  void _moveCameraToPosition(Position position) {
+    final currentLatLng = LatLng(position.latitude, position.longitude);
+
+    _mapController.animateCamera(
+      CameraUpdate.newLatLng(currentLatLng),
+    );
   }
 
   /// Shows a snack bar with the specified message.
@@ -78,17 +77,19 @@ class GoogleMapsPageState extends State<GoogleMapsPage> {
     }
   }
 
-  /// Updates the marker to the current position.
-  void _updateMarker() {
+  /// Updates the marker to the provided position.
+  void _updateMarker(Position position) {
+    final currentLatLng = LatLng(position.latitude, position.longitude);
+
     final marker = Marker(
       markerId: const MarkerId('currentLocation'),
-      position: _initialPosition,
+      position: currentLatLng,
       infoWindow: const InfoWindow(title: 'Your Location'),
     );
 
     setState(() {
       _markers
-        ..clear() // Clear existing markers to keep only the current location
+        ..clear()
         ..add(marker);
     });
   }
@@ -120,9 +121,9 @@ class GoogleMapsPageState extends State<GoogleMapsPage> {
             bottom: 50,
             right: 55,
             child: FloatingActionButton(
-              onPressed: _updateMarker,
-              tooltip: 'Add Marker',
-              child: const Icon(Icons.add_location),
+              onPressed: _determinePosition,
+              tooltip: 'Refresh Location',
+              child: const Icon(Icons.location_searching),
             ),
           ),
           Align(
@@ -135,8 +136,7 @@ class GoogleMapsPageState extends State<GoogleMapsPage> {
                     builder: (context) => const Support(),
                   ),
                 );
-              }
-              ),
+              }),
             ),
           ),
         ],
