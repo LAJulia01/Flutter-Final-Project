@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:module2_4_lab_exercise/firebaseconnection.dart';
-import 'package:module2_4_lab_exercise/utils/authen_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
