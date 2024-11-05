@@ -19,17 +19,21 @@ class Profile extends StatelessWidget {
         children: [
           CircleAvatar(
             backgroundImage: AssetImage(userData.userAccount.img),
-            radius: 180 / 2,
+            radius: 150 / 2,
           ),
           Positioned(
-            top: 130,
-            left: 130,
+            top: 110,
+            left: 110,
             right: 0,
             bottom: 0,
             child: Container(
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: Color.fromARGB(255, 74, 192, 78),
                 shape: BoxShape.circle,
+                border: Border.all(
+                  color: Colors.white,
+                  width: 5.0,
+                ),
               ),
               width: 10,
               height: 10,

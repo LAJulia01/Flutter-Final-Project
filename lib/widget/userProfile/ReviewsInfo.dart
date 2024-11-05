@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:module2_4_lab_exercise/models/userData.dart';
 import 'package:module2_4_lab_exercise/models/userReviews.dart';
 import 'package:module2_4_lab_exercise/styles.dart';
 
 class ReviewsInfo extends StatelessWidget {
-  const ReviewsInfo(
-      {super.key, required this.width, required this.userReviews});
+  const ReviewsInfo({
+    super.key,
+    required this.width,
+    required this.userReviews,
+  });
 
   final dynamic width;
   final UserReviews userReviews;
@@ -76,6 +80,28 @@ class ReviewsInfo extends StatelessWidget {
               height: 1.5,
               color: Colors.white,
             ),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: Image.asset(userReviews.reviewerpostImg[0]),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                child: Image.asset(userReviews.reviewerpostImg[1]),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                child: Image.asset(userReviews.reviewerpostImg[2]),
+              ),
+            ],
           ),
           const SizedBox(
             height: 15,

@@ -4,37 +4,52 @@ import 'package:module2_4_lab_exercise/models/userReviews.dart';
 class UserData {
   List<UserReviews> reviewersList = [
     UserReviews(
-      reviewerImg: 'assets/avatar1.jpg',
+      reviewerImg: 'avatar1.jpg',
       reviewerName: 'Melissa',
       reviewerTime: 'September 2024',
+      reviewerpostImg: [
+        'reviews/1.jpg',
+        'reviews/2.jpg',
+        'reviews/3.jpg',
+      ],
       reviewerContent:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+          "We hired Melissa to babysit our 2-year-old daughter for the first time, and we couldn't have been more pleased with the experience. From the moment she arrived, Emma was warm, professional, and immediately put our daughter at ease. She took the time to introduce herself, ask about our daughter’s routine, and make sure she knew any special instructions before we left.",
     ),
     UserReviews(
-      reviewerImg: 'assets/avatar1.jpg',
-      reviewerName: 'Melissa',
+      reviewerImg: 'avatar1.jpg',
+      reviewerName: 'Katie',
       reviewerTime: 'September 2024',
+      reviewerpostImg: [
+        'reviews/1.jpg',
+        'reviews/2.jpg',
+        'reviews/3.jpg',
+      ],
       reviewerContent:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+          "We recently hired Katie for a few hours to look after our 3-year-old son while we went out for a date night. Overall, we had a positive experience. Katie was punctual, and she quickly bonded with our son, engaging him in some fun crafts and reading books. She was also very patient when he didn’t want to go to bed right away.",
     ),
     UserReviews(
-      reviewerImg: 'assets/avatar1.jpg',
-      reviewerName: 'Melissa',
+      reviewerImg: 'avatar1.jpg',
+      reviewerName: 'Olivia',
       reviewerTime: 'September 2024',
+      reviewerpostImg: [
+        'reviews/1.jpg',
+        'reviews/2.jpg',
+        'reviews/3.jpg',
+      ],
       reviewerContent:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.",
+          "Olivia was amazing! We needed someone to look after our infant and our 6-year-old daughter for a few hours, and she handled everything like a pro. She was so attentive to our baby’s needs and even followed the detailed schedule we had set up. Our daughter had a blast, and Olivia made sure she was entertained with games, arts and crafts, and a little movie time before bed.",
     ),
   ];
 
   Babysitterprofile _userAccount = Babysitterprofile(
-    name: 'Jeffrey Jan Mamac',
-    img: 'assets/avatar1.jpg',
+    name: 'Beverly Jane',
+    img: 'avatar1.jpg',
     location: 'Davao City',
     age: '25',
     description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+        "I am responsible hardworking, and trustworthy person, funny caring energetic, loving nannies to children's, talkative, and disciplinarian.",
     characteristics: ['Calm', 'Caring', 'Empathetic'],
-    numofReviews: '100',
+    numofReviews: '5',
     hourlyRate: '300',
   );
 

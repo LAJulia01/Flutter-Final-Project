@@ -92,13 +92,13 @@ class ProfilePage extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          titleText('Characteristics'),
-          CharacteristicsInfo(
-            userData: userData,
-          ),
-          const SizedBox(
-            height: 20,
-          ),
+          // titleText('Characteristics'),
+          // CharacteristicsInfo(
+          //   userData: userData,
+          // ),
+          // const SizedBox(
+          //   height: 20,
+          // ),
           titleText('Reviews'),
           const SizedBox(
             height: 15,
