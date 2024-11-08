@@ -30,7 +30,6 @@ class CcustomTextFieldState extends State<CustomTextField> {
           decoration: InputDecoration(
               border: const OutlineInputBorder(
               ),
-              filled: true,
               hintText: widget.hintText,
               suffixIcon: Icon(
                 widget.icon,

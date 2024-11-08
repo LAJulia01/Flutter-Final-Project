@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:module2_4_lab_exercise/utils/customButton.dart';
 import 'package:module2_4_lab_exercise/models/next_page.dart';
-import 'package:module2_4_lab_exercise/utils/styles.dart';
 
-class FilePage1 extends StatefulWidget with GlobalStyles {
-  FilePage1({super.key});
+class FilePage1 extends StatefulWidget {
+  const FilePage1({super.key});
 
   @override
-  State<FilePage1> createState() => _FilePage1State();
+  State<FilePage1> createState() => FilePage1State();
 }
 
-class _FilePage1State extends State<FilePage1> {
+class FilePage1State extends State<FilePage1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,20 +24,18 @@ class _FilePage1State extends State<FilePage1> {
               SizedBox(
                 height: 50,
               ),
-              Container(
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'REQUIREMENTS',
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 255, 83, 141),
-                      ),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'REQUIREMENTS',
+                    style: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 255, 83, 141),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               const Divider(
                 height: 10,
@@ -71,7 +68,6 @@ class _FilePage1State extends State<FilePage1> {
                   hintText: 'Full Name:',
                   contentPadding: EdgeInsets.all(10),
                   border: OutlineInputBorder(),
-                  filled: true,
                 ),
               ),
               const SizedBox(height: 5),
@@ -80,16 +76,14 @@ class _FilePage1State extends State<FilePage1> {
                   hintText: 'Age:',
                   contentPadding: EdgeInsets.all(10),
                   border: OutlineInputBorder(),
-                  filled: true,
                 ),
               ),
-               const SizedBox(height: 5),
+              const SizedBox(height: 5),
               const TextField(
                 decoration: InputDecoration(
                   hintText: 'Gender:',
                   contentPadding: EdgeInsets.all(10),
                   border: OutlineInputBorder(),
-                  filled: true,
                 ),
               ),
               const SizedBox(height: 5),
@@ -98,7 +92,6 @@ class _FilePage1State extends State<FilePage1> {
                   hintText: 'Birthday:',
                   contentPadding: EdgeInsets.all(10),
                   border: OutlineInputBorder(),
-                  filled: true,
                 ),
               ),
               const SizedBox(height: 30),
@@ -121,7 +114,8 @@ class _FilePage1State extends State<FilePage1> {
               Container(
                   margin: const EdgeInsets.symmetric(horizontal: 100),
                   child: customBtn('Next', () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const NextPage()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const NextPage()));
                   })),
             ],
           ),

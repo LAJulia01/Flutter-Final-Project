@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:module2_4_lab_exercise/models/location_mapscreen.dart';
+import 'package:module2_4_lab_exercise/models/file_page1.dart';
 import 'package:module2_4_lab_exercise/models/loginpage.dart';
 import 'package:module2_4_lab_exercise/utils/customButton.dart';
 
@@ -74,44 +74,42 @@ class _RegisterPageState extends State<RegisterPage> {
 
     return Scaffold(
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
             width: 500,
             child: Image.asset('assets/flutter.jpg'),
           ),
           Row(
-              mainAxisAlignment:
-                  MainAxisAlignment.center, // Centers the buttons
-              children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  style: TextButton.styleFrom(
-                    foregroundColor: Colors.grey, // Sets text color to grey
-                  ),
-                  child: const Text('Login'),
+            mainAxisAlignment: MainAxisAlignment.center, // Centers the buttons
+            children: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.grey, // Sets text color to grey
                 ),
-                const SizedBox(width: 10), // Adds space between buttons
-                const Text('|',
-                    style: TextStyle(color: Colors.black)), // Divider text
-                const SizedBox(width: 10), // Adds space after divider
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const LoginPage()),
-                    );
-                  },
-                  style: TextButton.styleFrom(
-                    foregroundColor:
-                        const Color(0xFFFFAFCC), // Sets text color to #FFAFCC
-                  ),
-                  child: const Text('Register'),
+                child: const Text('Login'),
+              ),
+              const SizedBox(width: 10), // Adds space between buttons
+              const Text('|',
+                  style: TextStyle(color: Colors.black)), // Divider text
+              const SizedBox(width: 10), // Adds space after divider
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                  );
+                },
+                style: TextButton.styleFrom(
+                  foregroundColor:
+                      const Color(0xFFFFAFCC), // Sets text color to #FFAFCC
                 ),
-              ],
-            ),
+                child: const Text('Register'),
+              ),
+            ],
+          ),
           const SizedBox(height: 30),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -143,7 +141,8 @@ class _RegisterPageState extends State<RegisterPage> {
                         hintText: 'Enter OTP:',
                         icon: Icons.security,
                       )
-                    : const SizedBox.shrink(), // Show OTP field only after OTP is sent
+                    : const SizedBox
+                        .shrink(), // Show OTP field only after OTP is sent
                 const SizedBox(height: 15),
                 CustomTextField(
                     obscureText: false,
@@ -152,27 +151,30 @@ class _RegisterPageState extends State<RegisterPage> {
                     icon: Icons.email),
                 const SizedBox(height: 25),
                 // Button to send OTP
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 100),
-                  child: customBtn('Next', () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const GoogleMapsPage()));
-                  })),
+                CustomButton(
+                    text: 'Next',
+                    onPressed: () {
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => FilePage1()));
+                    }),
                 const SizedBox(height: 20),
-                const OrDivider(),
+                OrDivider(),
+                const SizedBox(height: 10),
+                InkWell(
+                    child:
+                        buildSocialButton(Icons.mail, Colors.pink, 'GOOGLE')),
                 const SizedBox(height: 10),
                 InkWell(
                     child: buildSocialButton(
                         Icons.facebook, Colors.blue, 'FACEBOOK')),
-                const SizedBox(height: 20),
-                InkWell(
-                    child: buildSocialButton(Icons.mail, Colors.pink, 'GOOGLE')),
-                const SizedBox(height: 10),
-
+                const SizedBox(
+                  height: 20,
+                ),
                 footerTitle(() {
-                  // Navigate to the LoginPage
-                  Navigator.push(
+                  // Navigate to the RegisterPage
+                  Navigator.pop(
                     context,
-                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                    MaterialPageRoute(builder: (context) => LoginPage()),
                   );
                 }, 'Registered?', 'LOGIN'),
               ],
@@ -190,13 +192,13 @@ class OrDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 200),
+      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 100),
       child: Row(
         children: [
           buildDivider(),
           const Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: 6,
+              horizontal: 5,
             ),
             child: Text(
               "or",

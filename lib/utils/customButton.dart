@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:module2_4_lab_exercise/models/file_page1.dart';
+
 
 class CustomButton extends StatefulWidget {
-  const CustomButton({super.key, required this.text, required void Function() onPressed});
+   const CustomButton({super.key, required this.text, required this.onPressed});
 
   final String text;
+final Function() onPressed;
 
   @override
   State<CustomButton> createState() => _CustomButtonState();
@@ -15,19 +16,28 @@ class _CustomButtonState extends State<CustomButton> {
   Widget build(BuildContext context) {
     // final width = MediaQuery.of(context).size.width;
 
-    return ElevatedButton(
-      onPressed: () {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) =>  FilePage1()));
-      },
-      style: ElevatedButton.styleFrom(
-        minimumSize: const Size.fromHeight(54),
-        backgroundColor: const Color(0xFFF5A7A5),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+    return Container(
+      decoration: const BoxDecoration(
+        boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              spreadRadius: 1,
+              blurRadius: 10,
+              offset: Offset(3, 3),
+            ),
+        ]
       ),
-      child: Text(
-        widget.text,
-        style: const TextStyle(color: Colors.black),
+      child: ElevatedButton(
+        onPressed: widget.onPressed,
+        style: ElevatedButton.styleFrom(
+          minimumSize: const Size.fromHeight(54),
+          backgroundColor: const Color(0xFFF5A7A5),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+        ),
+        child: Text(
+          widget.text,
+          style: const TextStyle(color: Colors.black),
+        ),
       ),
     );
   }

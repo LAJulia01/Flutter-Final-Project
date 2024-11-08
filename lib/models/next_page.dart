@@ -27,20 +27,18 @@ class _NextPageState extends State<NextPage> {
           SizedBox(
             height: 20,
           ),
-          Container(
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'REQUIREMENTS',
-                  style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 255, 83, 141),
-                  ),
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'REQUIREMENTS',
+                style: TextStyle(
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 255, 83, 141),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           const Divider(
             height: 10,

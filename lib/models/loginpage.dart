@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:module2_4_lab_exercise/models/location_mapscreen.dart';
+import 'package:module2_4_lab_exercise/models/authen_page.dart';
+import 'package:module2_4_lab_exercise/models/forget_password.dart';
 import 'package:module2_4_lab_exercise/models/registerscreen.dart';
 import 'package:module2_4_lab_exercise/utils/customButton.dart';
 import 'package:module2_4_lab_exercise/utils/customTextField.dart';
-
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -40,44 +40,43 @@ class _LoginPageState extends State<LoginPage> {
     TextEditingController passwordController1 = TextEditingController();
     return Scaffold(
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
             width: 500,
             child: Image.asset('assets/flutter.jpg'),
           ),
-                      Row(
-              mainAxisAlignment:
-                  MainAxisAlignment.center, // Centers the buttons
-              children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  style: TextButton.styleFrom(
-                    foregroundColor:
-                        const Color(0xFFFFAFCC), // Sets text color to #FFAFCC // Sets text color to #FFAFCC
-                  ),
-                  child: const Text('Login'),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center, // Centers the buttons
+            children: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                style: TextButton.styleFrom(
+                  foregroundColor: const Color(
+                      0xFFFFAFCC), // Sets text color to #FFAFCC // Sets text color to #FFAFCC
                 ),
-                const SizedBox(width: 10), // Adds space between buttons
-                const Text('|',
-                    style: TextStyle(color: Colors.black)), // Divider text
-                const SizedBox(width: 10), // Adds space after divider
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const RegisterPage()),
-                    );
-                  },
-                  style: TextButton.styleFrom(
-                    foregroundColor: Colors.grey, // Sets text color to grey
-                  ),
-                  child: const Text('Register'),
+                child: const Text('Login'),
+              ),
+              const SizedBox(width: 10), // Adds space between buttons
+              const Text('|',
+                  style: TextStyle(color: Colors.black)), // Divider text
+              const SizedBox(width: 10), // Adds space after divider
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const RegisterPage()),
+                  );
+                },
+                style: TextButton.styleFrom(
+                  foregroundColor: Colors.grey, // Sets text color to grey
                 ),
-              ],
-            ),
+                child: const Text('Register'),
+              ),
+            ],
+          ),
           const SizedBox(height: 30),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -98,20 +97,24 @@ class _LoginPageState extends State<LoginPage> {
                   icon: Icons.lock,
                 ),
                 const SizedBox(height: 5),
-                const Row(
-                  children: [Text('     Forget Password')],
+                Row(
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ForgetPassword()));
+                      },
+                      child: Text('Forget Password'),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 25),
                 CustomButton(
-                  text: 'LOG IN',
-                  onPressed: () {
-                    // Implement your logic for logging in here
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => GoogleMapsPage()),
-                    );
-                  },
-                ),
+                    text: 'LOGIN',
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => AuthenPage()));
+                    }),
                 const SizedBox(height: 20),
                 OrDivider(),
                 const SizedBox(height: 10),

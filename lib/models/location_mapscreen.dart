@@ -6,7 +6,7 @@ import 'package:module2_4_lab_exercise/views/support_screen.dart';
 
 class GoogleMapsPage extends StatefulWidget {
   const GoogleMapsPage({super.key});
-  
+
   @override
   GoogleMapsPageState createState() => GoogleMapsPageState();
 }
@@ -69,7 +69,8 @@ class GoogleMapsPageState extends State<GoogleMapsPage> {
   /// Shows a snack bar with the specified message.
   void _showSnackBar(String message) {
     if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(message)));
     }
   }
 
@@ -126,7 +127,7 @@ class GoogleMapsPageState extends State<GoogleMapsPage> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: SizedBox(
-                width: 368,
+                width: 100,
                 height: 56,
                 child: customBtn('Next', () {
                   Navigator.of(context).push(
