@@ -1,35 +1,58 @@
+// flutter
 import 'package:flutter/material.dart';
 
 mixin GlobalStyles {
-  final textStyleHEADER = const TextStyle(
-    fontFamily: 'poppins',
+  /*-------------- Text Styles --------------*/
+  final TextStyle primaryText = const TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.bold,
-    color: Color(0xffF5A7A5),
-  );
-
-  final textStyleSUBHEADER = const TextStyle(
+    letterSpacing: 1,
     fontFamily: 'poppins',
+  );
+  final TextStyle semiPrimaryText  = const TextStyle(
     fontSize: 18,
-    fontWeight: FontWeight.w400,
-    color: Color(0xffD0E4ED),
-  );
-
-  final textStyleBODYTEXT = const TextStyle(
     fontFamily: 'poppins',
-    fontSize: 15,
-    fontWeight: FontWeight.normal,
-    color: Color(0xffF5CF9E),
-  );
-  final textStyleOptioncolor = const TextStyle(
-    fontFamily: 'poppins',
-    fontSize: 15,
-    fontWeight: FontWeight.normal,
-    color: Color(0xffF3F6A9),
   );
 
-  static const primaryColor = Color.fromARGB(255, 255, 255, 1);
-  static const secondaryColor = Color.fromARGB(255, 255, 255, 1);
+  final TextStyle secondaryText = const TextStyle(
+    fontSize: 16,
+     fontFamily: 'poppins',
+  );
 
-  var deepRose;
+  final TextStyle semiSecondaryText = const TextStyle(
+    fontSize: 15,
+     fontFamily: 'poppins',
+  );
+
+  final TextStyle regularText = const TextStyle(
+    fontSize: 14,
+     fontFamily: 'poppins',
+  );
+  final TextStyle semiRegularText = const TextStyle(
+    fontSize: 13,
+     fontFamily: 'poppins',
+  );
+  final TextStyle bodyText = const TextStyle(
+    fontSize: 12,
+     fontFamily: 'poppins',
+  );
+  final TextStyle semiBodyText = const TextStyle(
+    fontSize: 11,
+     fontFamily: 'poppins',
+  );
+  
+  static const dynamic iconSize = 24;
+
+  /*-------------- Color Styles --------------*/
+  static const Color blushPink = Color(0xffFFC1CC);
+  static const Color softGray = Color(0xffD3D3D3);
+  static const Color mustardYellow = Color(0xffF4CAC3);
+  static const Color deepRose = Color(0xffE28595);
+  static const Color palePeach = Color(0xffFFDAB9);
+
+static const Color buttonColorbig = Color(0xffFFEFED);
+static const Color buttonColorsmall = Color(0xffF5A7A5);
+
+  /*--  ------------ Padding Styles --------------*/
+  static const double defaultPadding = 16.0;
 }

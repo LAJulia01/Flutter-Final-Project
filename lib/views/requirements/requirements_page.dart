@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:module2_4_lab_exercise/utils/customButton.dart';
-import 'package:module2_4_lab_exercise/models/next_page.dart';
+import 'package:module2_4_lab_exercise/views/requirements/requirements_page2.dart';
+
 
 class FilePage1 extends StatefulWidget {
   const FilePage1({super.key});

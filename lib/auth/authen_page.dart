@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:module2_4_lab_exercise/models/location_mapscreen.dart';
-import 'package:module2_4_lab_exercise/styles.dart';
+import 'package:module2_4_lab_exercise/utils/styles.dart';
 
 class AuthenPage extends StatelessWidget with GlobalStyles {
   AuthenPage({super.key});
