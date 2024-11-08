@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:module2_4_lab_exercise/models/helpandsupp_page.dart';
-import 'package:module2_4_lab_exercise/models/loginpage.dart';
+import 'package:module2_4_lab_exercise/models/registerscreen.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -18,13 +17,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: false,
       title: 'Nanny Cares',
       theme: ThemeData(
         colorSchemeSeed: Color(0xffFFC1CC),
         useMaterial3: true,
       ),
-      home: const HelpandSupportPage(),
+      home: const RegisterPage(),
     );
   }
 }

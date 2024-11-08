@@ -27,7 +27,7 @@ class _ButtonState extends State<Bigbutton> with GlobalStyles {
       child: ElevatedButton(
         onPressed: widget.onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: GlobalStyles.buttonColorbig,
+          backgroundColor: const Color(0xFFFFEFED),
           minimumSize: const Size(368, 56),
         ),
         child: Text(widget.text),
