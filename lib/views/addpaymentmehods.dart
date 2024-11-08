@@ -7,6 +7,8 @@ void main() {
 }
 
 class Addpaymentmehods extends StatelessWidget {
+  const Addpaymentmehods({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,6 +23,8 @@ class Addpaymentmehods extends StatelessWidget {
 }
 
 class PaymentScreen extends StatelessWidget {
+  const PaymentScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

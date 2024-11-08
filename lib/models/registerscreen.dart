@@ -118,7 +118,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 CustomTextField(
                     obscureText: false,
                     controller: usernameController,
-                    hintText: 'Username:',
+                    hintText: 'Name:',
                     icon: Icons.people),
                 const SizedBox(height: 15),
                 CustomTextField(
@@ -134,14 +134,14 @@ class _RegisterPageState extends State<RegisterPage> {
                     hintText: 'Contact Number:',
                     icon: Icons.phone),
                 const SizedBox(height: 15),
-                otpSent
-                    ? CustomTextField(
+                
+                CustomTextField(
                         obscureText: false,
                         controller: otpController,
                         hintText: 'Enter OTP:',
                         icon: Icons.security,
-                      )
-                    : const SizedBox
+                      ),
+                const SizedBox
                         .shrink(), // Show OTP field only after OTP is sent
                 const SizedBox(height: 15),
                 CustomTextField(

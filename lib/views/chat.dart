@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:module2_4_lab_exercise/views/chathome.dart';
 
 class Chat extends StatelessWidget {
+  const Chat({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -13,6 +15,8 @@ class Chat extends StatelessWidget {
 }
 
 class ChatScreen extends StatefulWidget {
+  const ChatScreen({super.key});
+
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
@@ -154,7 +158,7 @@ class Message {
 class MessageBubble extends StatelessWidget {
   final Message message;
 
-  const MessageBubble({Key? key, required this.message}) : super(key: key);
+  const MessageBubble({super.key, required this.message});
 
   @override
   Widget build(BuildContext context) {
