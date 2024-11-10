@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:module2_4_lab_exercise/models/authen_page.dart';
-import 'package:module2_4_lab_exercise/models/forget_password.dart';
-import 'package:module2_4_lab_exercise/models/registerscreen.dart';
+import 'package:module2_4_lab_exercise/assign%20LIB/Julia/registerscreen.dart';
+import 'package:module2_4_lab_exercise/auth/authen_page.dart';
+import 'package:module2_4_lab_exercise/auth/widgets/forget_password.dart';
 import 'package:module2_4_lab_exercise/utils/customButton.dart';
 import 'package:module2_4_lab_exercise/utils/customTextField.dart';
 

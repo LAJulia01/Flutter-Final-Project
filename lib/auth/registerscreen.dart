@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:module2_4_lab_exercise/models/file_page1.dart';
-import 'package:module2_4_lab_exercise/models/loginpage.dart';
+import 'package:module2_4_lab_exercise/models/requirements_page.dart';
+import 'package:module2_4_lab_exercise/auth/loginpage.dart';
 import 'package:module2_4_lab_exercise/utils/customButton.dart';
 
 import 'package:module2_4_lab_exercise/widget/custom_textfield.dart';

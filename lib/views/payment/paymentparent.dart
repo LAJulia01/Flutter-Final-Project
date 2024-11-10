@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:module2_4_lab_exercise/views/addpaymentmehods.dart';
+import 'package:module2_4_lab_exercise/views/payment/addpaymentmehods.dart';
 
 class Paymentparent extends StatelessWidget {
   const Paymentparent({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:module2_4_lab_exercise/styles.dart';
+import 'package:module2_4_lab_exercise/utils/styles.dart';
 import 'package:module2_4_lab_exercise/widget/bigbutton.dart';
 import 'package:module2_4_lab_exercise/widget/smallbutton.dart';
 

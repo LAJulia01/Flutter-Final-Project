@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:module2_4_lab_exercise/views/paymentparent.dart';
+import 'package:module2_4_lab_exercise/views/payment/paymentparent.dart';
 
 void main() {
   runApp(Addpaymentmehods());

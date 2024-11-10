@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:module2_4_lab_exercise/styles.dart';
+import 'package:module2_4_lab_exercise/utils/styles.dart';
 
 class Bigbutton extends StatefulWidget {
   const Bigbutton({super.key, required this.text, required this.color, required this.onPressed});

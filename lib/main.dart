@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:module2_4_lab_exercise/models/registerscreen.dart';
+import 'package:module2_4_lab_exercise/auth/loginpage.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         colorSchemeSeed: Color(0xffFFC1CC),
         useMaterial3: true,
       ),
-      home: const RegisterPage(),
+      home: const LoginPage(),
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:module2_4_lab_exercise/views/chathome.dart';
+import 'package:module2_4_lab_exercise/views/message/chathome.dart';
 
 class Chat extends StatelessWidget {
   const Chat({super.key});
