@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:baby_sitter/utils/styles1.dart'; // Ensure AppTextStyles is available.
+import 'package:final_project/utils/styles/styles1.dart'; // Ensure AppTextStyles is available.
 
 Widget myProfile() {
   return Center(

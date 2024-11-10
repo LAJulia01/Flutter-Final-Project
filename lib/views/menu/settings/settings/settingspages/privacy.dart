@@ -1,7 +1,7 @@
-import 'package:baby_sitter/views/menu/settings/settings/settingscontent/privacycontent/blockedaccount.dart';
-import 'package:baby_sitter/views/menu/settings/settings/settingscontent/privacycontent/changepasswordcontent.dart';
-import 'package:baby_sitter/views/menu/widgets/navigation_button_widget.dart';
-import 'package:baby_sitter/views/menu/widgets/settings_appbar_widget.dart';
+import 'package:final_project/views/menu/settings/settings/settingscontent/privacycontent/blockedaccount.dart';
+import 'package:final_project/views/menu/settings/settings/settingscontent/privacycontent/changepasswordcontent.dart';
+import 'package:final_project/views/menu/widgets/navigation_button_widget.dart';
+import 'package:final_project/views/menu/widgets/settings_appbar_widget.dart';
 import 'package:flutter/material.dart';
 
 class PrivacyPage extends StatefulWidget {

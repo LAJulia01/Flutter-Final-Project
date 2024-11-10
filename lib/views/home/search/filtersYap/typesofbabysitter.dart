@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:baby_sitter/utils/style/textstyle.dart';
+import 'package:final_project/utils/styles/style/textstyle.dart';
 
 class TypesOfBabysitter extends StatefulWidget {
-  const TypesOfBabysitter({Key? key}) : super(key: key);
+  const TypesOfBabysitter({super.key});
 
   @override
   _TypesOfBabysitterState createState() => _TypesOfBabysitterState();

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:module2_4_lab_exercise/assign%20LIB/Julia/registerscreen.dart';
-import 'package:module2_4_lab_exercise/auth/authen_page.dart';
-import 'package:module2_4_lab_exercise/auth/widgets/forget_password.dart';
-import 'package:module2_4_lab_exercise/utils/customButton.dart';
-import 'package:module2_4_lab_exercise/utils/customTextField.dart';
+import 'package:final_project/auth/authen_page.dart';
+import 'package:final_project/auth/registerscreen.dart';
+import 'package:final_project/auth/widgets/forget_password.dart';
+import 'package:final_project/utils/customButton.dart';
+import 'package:final_project/utils/customTextField.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

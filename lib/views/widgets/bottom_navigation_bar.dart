@@ -1,9 +1,10 @@
 // custom_bottom_navigation_bar.dart
-import 'package:baby_sitter/views/booking/bookingPage.dart';
-import 'package:baby_sitter/views/favorite/favoritespage.dart';
-import 'package:baby_sitter/views/menu/menupage.dart';
-import 'package:baby_sitter/views/notifications/notificationpage.dart';
-import 'package:baby_sitter/views/home/mainpage.dart';
+
+import 'package:final_project/views/booking/Request_BookingPage.dart';
+import 'package:final_project/views/favorite/favoritespage.dart';
+import 'package:final_project/views/menu/menupage.dart';
+import 'package:final_project/views/notifications/notificationpage.dart';
+import 'package:final_project/views/home/mainpage.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
@@ -19,7 +20,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
     Widget page;
     switch (index) {
       case 0:
-        page = const BookingPage();
+        page = const BookingRequestPage();
         break;
       case 1:
         page = const FavoritesPage();

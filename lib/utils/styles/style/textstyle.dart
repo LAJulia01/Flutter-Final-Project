@@ -20,6 +20,8 @@ class AppTextStyles {
     fontWeight: FontWeight.bold,
     color: Colors.black54,
   );
+
+  static var bodyText;
 }
 
 // Sort

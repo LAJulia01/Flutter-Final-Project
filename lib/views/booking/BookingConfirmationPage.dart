@@ -1,7 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:final_project/views/booking/Booking_SuccessPage.dart';
 import 'package:flutter/material.dart';
-import 'package:it415_project/screen/Booking_SuccessPage.dart';
+
 
 class BookingConfirmationPage extends StatelessWidget {
   final String profileImageUrl;

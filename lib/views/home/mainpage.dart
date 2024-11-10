@@ -1,9 +1,10 @@
-import 'package:baby_sitter/views/home/widgets/circle_button_widget.dart';
-import 'package:baby_sitter/views/message/messagepage.dart';
+import 'package:final_project/views/home/widgets/circle_button_widget.dart';
+import 'package:final_project/views/message/chat.dart';
+
 import 'package:flutter/material.dart';
-import 'package:baby_sitter/views/widgets/bottom_navigation_bar.dart';
-import 'package:baby_sitter/utils/styles1.dart';
-import 'package:baby_sitter/views/home/search/searchpage.dart';
+import 'package:final_project/views/widgets/bottom_navigation_bar.dart';
+import 'package:final_project/utils/styles/styles1.dart';
+import 'package:final_project/views/home/search/searchpage.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -13,8 +14,8 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  double _scaleFactor = 1.0;
-  Offset _offset = Offset.zero;
+  final double _scaleFactor = 1.0;
+  final Offset _offset = Offset.zero;
   bool _areButtonsVisible = true; // Track button visibility
 
   void _onScaleStart(ScaleStartDetails details) {}
@@ -133,7 +134,7 @@ class _MainPageState extends State<MainPage> {
                               context: context, // Pass the context
                               icon: Icons.message_rounded,
                               targetPage:
-                                  const MessagePage(), // Specify target page
+                                  const Chat(), // Specify target page
                             ),
                             const SizedBox(height: 10),
 
@@ -142,7 +143,7 @@ class _MainPageState extends State<MainPage> {
                               context: context, // Pass the context
                               icon: Icons.my_location_rounded,
                               targetPage:
-                                  const MessagePage(), // Specify target page
+                                  const Chat(), // Specify target page
                             ),
                           ],
                         ),

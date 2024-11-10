@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:baby_sitter/utils/style/textstyle.dart';
+import 'package:final_project/utils/styles/style/textstyle.dart';
 
 class Verification extends StatefulWidget {
-  const Verification({Key? key}) : super(key: key);
+  const Verification({super.key});
 
   @override
   _VerificationState createState() => _VerificationState();

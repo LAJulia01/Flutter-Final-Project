@@ -1,4 +1,4 @@
-import 'package:baby_sitter/utils/style/textstyle.dart';
+import 'package:final_project/utils/styles/style/textstyle.dart';
 import 'package:flutter/material.dart';
 
 class NumberOfChildren extends StatefulWidget {
@@ -23,7 +23,7 @@ class _NumberOfChildrenState extends State<NumberOfChildren> {
         ),
         const Text(
           "1 to 15+ children",
-          style: const TextStyle(
+          style: TextStyle(
               fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey),
         ),
         const SizedBox(height: 10),

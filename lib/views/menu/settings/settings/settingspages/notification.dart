@@ -1,5 +1,5 @@
-import 'package:baby_sitter/views/menu/settings/settings/settingspages/widgets/toggle_switch_widget.dart';
-import 'package:baby_sitter/views/menu/widgets/settings_appbar_widget.dart';
+import 'package:final_project/views/menu/settings/settings/settingspages/widgets/toggle_switch_widget.dart';
+import 'package:final_project/views/menu/widgets/settings_appbar_widget.dart';
 import 'package:flutter/material.dart';
 
 class NotificationPage extends StatefulWidget {

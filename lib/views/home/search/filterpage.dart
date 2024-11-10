@@ -1,6 +1,7 @@
-import 'package:baby_sitter/views/home/search/filters/minimumrateperhour.dart';
-import 'package:baby_sitter/views/home/search/filters/numberofchildren.dart';
-import 'package:baby_sitter/views/home/search/filters/sort.dart';
+
+import 'package:final_project/views/home/search/filters/minimumrateperhour.dart';
+import 'package:final_project/views/home/search/filters/numberofchildren.dart';
+import 'package:final_project/views/home/search/filters/sort.dart';
 import 'package:flutter/material.dart';
 
 class FilterPage extends StatefulWidget {

@@ -1,4 +1,4 @@
-import 'package:baby_sitter/views/menu/widgets/settings_appbar_widget.dart';
+import 'package:final_project/views/menu/widgets/settings_appbar_widget.dart';
 import 'package:flutter/material.dart';
 
 class ChangePasswordContent extends StatefulWidget {

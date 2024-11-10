@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:module2_4_lab_exercise/utils/styles.dart';
+import 'package:final_project/utils/styles.dart';
 
 class Smallbutton extends StatefulWidget {
   const Smallbutton({super.key, required this.text, required this.color, required this.onPressed});

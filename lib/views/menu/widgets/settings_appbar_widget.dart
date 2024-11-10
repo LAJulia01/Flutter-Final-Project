@@ -1,4 +1,4 @@
-import 'package:baby_sitter/utils/styles1.dart';
+import 'package:final_project/utils/styles/styles1.dart';
 import 'package:flutter/material.dart';
 
 /// A customizable Settings AppBar widget

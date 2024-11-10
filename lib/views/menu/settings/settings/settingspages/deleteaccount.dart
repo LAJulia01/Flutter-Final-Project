@@ -1,6 +1,6 @@
-import 'package:baby_sitter/utils/styles1.dart';
-import 'package:baby_sitter/views/menu/settings/settings/settingspages/widgets/checkbox_delete_reason.dart';
-import 'package:baby_sitter/views/menu/widgets/settings_appbar_widget.dart';
+import 'package:final_project/utils/styles/styles1.dart';
+import 'package:final_project/views/menu/settings/settings/settingspages/widgets/checkbox_delete_reason.dart';
+import 'package:final_project/views/menu/widgets/settings_appbar_widget.dart';
 import 'package:flutter/material.dart';
 
 class DeleteAccoung extends StatefulWidget {

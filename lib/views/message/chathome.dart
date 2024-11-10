@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:module2_4_lab_exercise/views/message/chat.dart';
-import 'package:module2_4_lab_exercise/views/message/chat2.dart';
+import 'package:final_project/views/message/chat.dart';
+import 'package:final_project/views/message/chat2.dart';
 
 class Chathome extends StatelessWidget {
   const Chathome({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:baby_sitter/utils/styles1.dart';
+import 'package:final_project/utils/styles/styles1.dart';
 
 Widget navigationButton({
   required IconData icon,
