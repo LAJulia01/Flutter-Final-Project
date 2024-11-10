@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:module2_4_lab_exercise/views/login_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:module2_4_lab_exercise/auth/loginpage.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -12,12 +18,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Social Media Clone',
+      title: 'Nanny Cares',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorSchemeSeed: Color(0xffFFC1CC),
         useMaterial3: true,
       ),
-      home: const LoginScreen(),
+      home: const LoginPage(),
     );
   }
 }
