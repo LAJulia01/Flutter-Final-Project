@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:module2_4_lab_exercise/models/requirements_page.dart';
-import 'package:module2_4_lab_exercise/auth/loginpage.dart';
-import 'package:module2_4_lab_exercise/utils/customButton.dart';
 
-import 'package:module2_4_lab_exercise/widget/custom_textfield.dart';
+import 'package:final_project/auth/loginpage.dart';
+import 'package:final_project/utils/customButton.dart';
+import 'package:final_project/views/requirements/requirements_page.dart';
+
+import 'package:final_project/widget/custom_textfield.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:module2_4_lab_exercise/views/help_andsupport/helpandsupp_page2.dart';
-import 'package:module2_4_lab_exercise/views/help_andsupport/helpandsupp_page3.dart';
+import 'package:final_project/views/help_andsupport/helpandsupp_page2.dart';
+import 'package:final_project/views/help_andsupport/helpandsupp_page3.dart';
 
 
 class HelpandSupportPage extends StatelessWidget {

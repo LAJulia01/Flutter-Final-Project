@@ -1,5 +1,6 @@
-import 'package:baby_sitter/utils/styles1.dart';
-import 'package:baby_sitter/views/menu/widgets/settings_appbar_widget.dart';
+
+import 'package:final_project/utils/styles/style/textstyle.dart';
+import 'package:final_project/views/menu/widgets/settings_appbar_widget.dart';
 import 'package:flutter/material.dart';
 
 class BlockedAccountContent extends StatefulWidget {
@@ -15,22 +16,22 @@ class _BlockedAccountContentState extends State<BlockedAccountContent> {
     return Scaffold(
       // Scaffold added here
       appBar: settingsAppBar(title: 'Blocked Account', context: context),
-      body: const Padding(
-        padding: EdgeInsets.symmetric(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(
             horizontal: 20), // Add padding to the entire column
         child: Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               //btn
-              Icon(
+              const Icon(
                 Icons.face,
                 color: Color(0xFFF5A7A5),
                 size: 80, // Set the icon size
               ),
 
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
 

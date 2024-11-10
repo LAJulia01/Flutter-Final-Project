@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:module2_4_lab_exercise/views/message/chathome.dart';
+
 
 class Chat extends StatelessWidget {
   const Chat({super.key});
@@ -33,7 +33,7 @@ class _ChatScreenState extends State<ChatScreen> {
           icon: Icon(Icons.arrow_back_ios),
           onPressed: () {
             Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Chathome()));
+                context, MaterialPageRoute(builder: (context) => Chat()));
           },
         ),
         title: Row(

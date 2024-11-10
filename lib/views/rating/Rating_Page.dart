@@ -2,9 +2,9 @@
 
 import 'dart:io';
 
+import 'package:final_project/views/rating/RatingSuccessPage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:it415_project/screen/RatingSuccessPage.dart';
 
 class RatingPage extends StatefulWidget {
   const RatingPage({super.key});

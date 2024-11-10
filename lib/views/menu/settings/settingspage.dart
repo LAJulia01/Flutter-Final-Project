@@ -1,9 +1,9 @@
-// import 'package:baby_sitter/views/menu/settings/settings/settingspages/deleteaccount.dart';
-// import 'package:baby_sitter/views/menu/settings/settings/settingspages/languages.dart';
-// import 'package:baby_sitter/views/menu/settings/settings/settingspages/notification.dart';
-import 'package:baby_sitter/views/menu/settings/settings/settingspages/privacy.dart';
-import 'package:baby_sitter/views/menu/widgets/navigation_button_widget.dart';
-import 'package:baby_sitter/views/menu/widgets/settings_appbar_widget.dart';
+// import 'package:final_project/views/menu/settings/settings/settingspages/deleteaccount.dart';
+// import 'package:final_project/views/menu/settings/settings/settingspages/languages.dart';
+// import 'package:final_project/views/menu/settings/settings/settingspages/notification.dart';
+import 'package:final_project/views/menu/settings/settings/settingspages/privacy.dart';
+import 'package:final_project/views/menu/widgets/navigation_button_widget.dart';
+import 'package:final_project/views/menu/widgets/settings_appbar_widget.dart';
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatefulWidget {

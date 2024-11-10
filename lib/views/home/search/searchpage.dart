@@ -1,7 +1,7 @@
-// import 'package:baby_sitter/views/home/search/filterpage.dart';
-import 'package:baby_sitter/views/home/search/filterpageYap.dart';
+// import 'package:final_project/views/home/search/filterpage.dart';
+import 'package:final_project/views/home/search/filterpageYap.dart';
 import 'package:flutter/material.dart';
-import 'package:baby_sitter/utils/styles1.dart'; // Import the styles
+import 'package:final_project/utils/styles/styles1.dart'; // Import the styles
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});

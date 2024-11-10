@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:module2_4_lab_exercise/utils/styles.dart';
+import 'package:final_project/utils/styles.dart';
 
 class ForgetPassword extends StatelessWidget with GlobalStyles {
   ForgetPassword({super.key});

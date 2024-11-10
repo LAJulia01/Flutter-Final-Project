@@ -1,5 +1,6 @@
-import 'package:baby_sitter/views/widgets/bottom_navigation_bar.dart';
+
 import 'package:flutter/material.dart';
+import 'package:final_project/views/widgets/bottom_navigation_bar.dart';
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({super.key});

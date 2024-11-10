@@ -1,4 +1,4 @@
-import 'package:baby_sitter/utils/style/textstyle.dart';
+import 'package:final_project/utils/styles/style/textstyle.dart';
 import 'package:flutter/material.dart';
 
 class LanguagesContent extends StatefulWidget {

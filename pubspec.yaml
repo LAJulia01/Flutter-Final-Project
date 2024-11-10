@@ -1,4 +1,4 @@
-name: Final Project
+name: final_project
 description: "A new Flutter project."
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
@@ -27,7 +27,9 @@ dependencies:
   image_picker: ^1.1.2
   firebase_core: ^3.6.0
   intl: ^0.17.0
-
+  curved_navigation_bar: ^1.0.6
+  flutter_switch: ^0.3.2
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

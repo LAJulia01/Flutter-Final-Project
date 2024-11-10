@@ -1,15 +1,15 @@
-import 'package:baby_sitter/views/home/mainpage.dart';
-import 'package:baby_sitter/views/home/search/filtersYap/Needsbabycomfortablewith.dart';
-import 'package:baby_sitter/views/home/search/filtersYap/Preferredbabysittinglocation.dart';
-import 'package:baby_sitter/views/home/search/filtersYap/ageofchildren.dart';
-import 'package:baby_sitter/views/home/search/filtersYap/btn.dart';
-import 'package:baby_sitter/views/home/search/filtersYap/minimumrateperhour.dart';
-import 'package:baby_sitter/views/home/search/filtersYap/numberofchildren.dart';
-import 'package:baby_sitter/views/home/search/filtersYap/sort.dart';
-import 'package:baby_sitter/views/home/search/filtersYap/spokenlanguage.dart';
-import 'package:baby_sitter/views/home/search/filtersYap/typesofbabysitter.dart';
-import 'package:baby_sitter/views/home/search/filtersYap/verification.dart';
-import 'package:baby_sitter/views/home/search/filtersYap/whenbabysitterisneeded.dart';
+import 'package:final_project/views/home/mainpage.dart';
+import 'package:final_project/views/home/search/filtersYap/Needsbabycomfortablewith.dart';
+import 'package:final_project/views/home/search/filtersYap/Preferredbabysittinglocation.dart';
+import 'package:final_project/views/home/search/filtersYap/ageofchildren.dart';
+import 'package:final_project/views/home/search/filtersYap/btn.dart';
+import 'package:final_project/views/home/search/filtersYap/minimumrateperhour.dart';
+import 'package:final_project/views/home/search/filtersYap/numberofchildren.dart';
+import 'package:final_project/views/home/search/filtersYap/sort.dart';
+import 'package:final_project/views/home/search/filtersYap/spokenlanguage.dart';
+import 'package:final_project/views/home/search/filtersYap/typesofbabysitter.dart';
+import 'package:final_project/views/home/search/filtersYap/verification.dart';
+import 'package:final_project/views/home/search/filtersYap/whenbabysitterisneeded.dart';
 import 'package:flutter/material.dart';
 
 class FilterPageYap extends StatefulWidget {
