@@ -1,6 +1,8 @@
+import 'package:final_project/auth/register.dart';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:final_project/auth/loginpage.dart';
+
 import 'firebase_options.dart';
 
 void main() async {
@@ -23,7 +25,7 @@ class MyApp extends StatelessWidget {
         colorSchemeSeed: Color(0xffFFC1CC),
         useMaterial3: true,
       ),
-      home: const LoginPage(),
+      home: const Register(),
     );
   }
 }
