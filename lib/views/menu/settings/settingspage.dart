@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nannycare/views/menu/settings/settings/settingspages/deleteaccount.dart';
-import 'package:nannycare/views/menu/settings/settings/settingspages/languages.dart';
-import 'package:nannycare/views/menu/settings/settings/settingspages/notification.dart';
 import 'package:nannycare/views/menu/settings/settings/settingspages/privacy.dart';
 import 'package:nannycare/views/menu/widgets/navigation_button_widget.dart';
 import 'package:nannycare/views/menu/widgets/settings_appbar_widget.dart';
@@ -19,7 +16,8 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       appBar: settingsAppBar(
         title: 'Settings',
-        context: context,
+        context: context, 
+        style: TextStyle(), 
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -37,7 +35,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 label: 'Privacy',
                 page: const PrivacyPage(),
                 context: context,
-              // ),
+              ),
               // navigationButton(
               //   icon: Icons.language_rounded,
               //   label: 'Language',

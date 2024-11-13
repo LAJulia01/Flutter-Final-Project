@@ -18,7 +18,11 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: settingsAppBar(title: 'Privacy Policy', context: context),
+      appBar: settingsAppBar(
+        title: 'Settings',
+        context: context, 
+        style: TextStyle(), 
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: SingleChildScrollView(

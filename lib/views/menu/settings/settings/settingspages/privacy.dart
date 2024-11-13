@@ -15,9 +15,10 @@ class _PrivacyPageState extends State<PrivacyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: settingsAppBar(
-        title: 'Privacy',
-        context: context,
+        appBar: settingsAppBar(
+        title: 'Settings',
+        context: context, 
+        style: TextStyle(), 
       ),
       body: Center(
         child: ListView(

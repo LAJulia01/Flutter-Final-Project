@@ -4,7 +4,7 @@ import 'package:nannycare/widget/bigbutton.dart';
 import 'package:nannycare/widget/smallbutton.dart';
 
 class ViewPage extends StatelessWidget with GlobalStyles {
-  const ViewPage({super.key});
+  ViewPage({super.key});
 
   @override
   Widget build(BuildContext context) {

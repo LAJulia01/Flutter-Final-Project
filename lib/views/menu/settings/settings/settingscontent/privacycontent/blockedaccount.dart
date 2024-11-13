@@ -15,7 +15,11 @@ class _BlockedAccountContentState extends State<BlockedAccountContent> {
   Widget build(BuildContext context) {
     return Scaffold(
       // Scaffold added here
-      appBar: settingsAppBar(title: 'Blocked Account', context: context),
+        appBar: settingsAppBar(
+        title: 'Settings',
+        context: context, 
+        style: TextStyle(), 
+      ),
       body: const Padding(
         padding: EdgeInsets.symmetric(
             horizontal: 20), // Add padding to the entire column

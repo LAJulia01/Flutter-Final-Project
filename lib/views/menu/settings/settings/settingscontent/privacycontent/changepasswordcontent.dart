@@ -25,9 +25,10 @@ class _ChangePasswordContentState extends State<ChangePasswordContent> {
   Widget build(BuildContext context) {
     return Scaffold(
       // Scaffold added here
-      appBar: settingsAppBar(
-        title: 'Change Password',
-        context: context,
+        appBar: settingsAppBar(
+        title: 'Settings',
+        context: context, 
+        style: TextStyle(), 
       ),
       body: Center(
         child: ListView(

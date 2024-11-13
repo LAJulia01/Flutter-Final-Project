@@ -26,9 +26,10 @@ class _DeleteAccoungState extends State<DeleteAccoung> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: settingsAppBar(
-        title: 'Delete Account',
-        context: context,
+        appBar: settingsAppBar(
+        title: 'Settings',
+        context: context, 
+        style: TextStyle(), 
       ),
       body: Center(
         child: ListView(

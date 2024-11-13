@@ -20,9 +20,10 @@ class _NotificationPageState extends State<NotificationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: const CustomBottomNavigationBar(selectedIndex: 3),
-      appBar: settingsAppBar(
-        title: 'Notifications',
-        context: context,
+        appBar: settingsAppBar(
+        title: 'Settings',
+        context: context, 
+        style: TextStyle(), 
       ),
       body: Center(
         child: ListView(
