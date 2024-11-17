@@ -12,6 +12,10 @@ class FireCon extends StatefulWidget {
 class _FireConState extends State<FireCon> {
   final user = FirebaseAuth.instance.currentUser!;
 
+  var txtstyle = const TextStyle(
+    fontWeight: FontWeight.bold,
+  );
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
