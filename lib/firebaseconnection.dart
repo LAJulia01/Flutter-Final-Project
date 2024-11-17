@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class FireCon extends StatefulWidget {
@@ -9,6 +10,8 @@ class FireCon extends StatefulWidget {
 }
 
 class _FireConState extends State<FireCon> {
+  final user = FirebaseAuth.instance.currentUser!;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,9 +21,20 @@ class _FireConState extends State<FireCon> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Text('You successfully connected to Firebase'),
-            Text('BSIT4D'),
+          children: [
+            const Text('You successfully connected to Firebase'),
+            const SizedBox(height: 15),
+            const Text('signed as: '),
+            Text(
+              user.email!,
+              style: txtstyle,
+              ),
+            ElevatedButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+              },
+              child: const Text('SIGN OUT'),
+              ),
           ],
         ),
       ),
