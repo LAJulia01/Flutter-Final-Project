@@ -16,12 +16,12 @@ class _AuthenticatorStateState extends State<Authenticator> {
     return Scaffold(
       body: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
-         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) { 
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
             ); // Center
-          } else if (snapshot. hasError) {
+          } else if (snapshot.hasError) {
             return const Center(
               child: Text('Something went wrong!'),
             ); // Center
@@ -30,8 +30,8 @@ class _AuthenticatorStateState extends State<Authenticator> {
           } else {
             return const Login();
           }
-         },
-         ),
+        },
+      ),
     );
   }
 }

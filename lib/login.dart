@@ -14,35 +14,33 @@ class _LoginState extends State<Login> {
   late String errormessage;
   late bool isError;
 
-Future checkLogin(username, password) async{
-  showDialog(
-    context: context,
-    useRootNavigator: false,
-    barrierDismissible: false,
-    builder: (context) => const Center(
-      child: CircularProgressIndicator(),
-    )
-  );
+  Future checkLogin(username, password) async {
+    showDialog(
+        context: context,
+        useRootNavigator: false,
+        barrierDismissible: false,
+        builder: (context) => const Center(
+              child: CircularProgressIndicator(),
+            ));
     try {
-  await FirebaseAuth.instance.signInWithEmailAndPassword(
-    email: username,
-    password: password,
-  );
-  setState(() {
-    isError = false;
-    errormessage = "";
-    Navigator.pop(context);
-  });
-} on FirebaseAuthException catch (e) {
-  print(e);
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: username,
+        password: password,
+      );
+      setState(() {
+        isError = false;
+        errormessage = "";
+        Navigator.pop(context);
+      });
+    } on FirebaseAuthException catch (e) {
+      print(e);
 
-  setState(() {
-    isError = false;
-    errormessage = e.message.toString();
-    Navigator.pop(context);
-  });
-}
-
+      setState(() {
+        isError = false;
+        errormessage = e.message.toString();
+        Navigator.pop(context);
+      });
+    }
   }
 
   @override
@@ -127,6 +125,4 @@ Future checkLogin(username, password) async{
     letterSpacing: 2,
     fontSize: 38,
   );
-
-
 }

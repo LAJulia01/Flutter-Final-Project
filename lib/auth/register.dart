@@ -10,24 +10,22 @@ class Register extends StatelessWidget {
       backgroundColor: Color(0xFFFDE2E2), // Soft pink background
       body: SafeArea(
         child: Center(
-          child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CustomButton(
-                    text: 'Parent',
-                    onPressed: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => FilePage1()));
-                    }),
-                CustomButton(
-                    text: 'Babysitter',
-                    onPressed: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => FilePage1()));
-                    }),
-              ],
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CustomButton(
+                  text: 'Parent',
+                  onPressed: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => FilePage1()));
+                  }),
+              CustomButton(
+                  text: 'Babysitter',
+                  onPressed: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => FilePage1()));
+                  }),
+            ],
           ),
         ),
       ),
