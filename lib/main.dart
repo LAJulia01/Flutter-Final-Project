@@ -1,8 +1,9 @@
-import 'package:final_project/authenticator.dart';
-import 'package:final_project/login.dart';
+import 'package:final_project/lib/add_data.dart';
+import 'package:final_project/lib/alldata.dart';
+import 'package:final_project/lib/authenticator.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+import 'lib/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         colorSchemeSeed: Color(0xffFFC1CC),
         useMaterial3: true,
       ),
-      home: const Authenticator(),
+      home: const AllData(),
     );
   }
 }

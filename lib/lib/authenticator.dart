@@ -1,5 +1,5 @@
-import 'package:final_project/firebaseconnection.dart';
-import 'package:final_project/login.dart';
+import 'package:final_project/lib/firebaseconnection.dart';
+import 'package:final_project/lib/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
