@@ -41,7 +41,7 @@ class _UpdatePhotoState extends State<UpdatePhoto> {
   Future updateDatabase(urlDownload, context) async {
     final docUser = FirebaseFirestore.instance
         .collection('Employee')
-        .doc('1CFjIqaNT7NfOlRxHRFB'); //change this path
+        .doc('PpLMLVb8iTbM2gnX9LB0'); //change this path
 
     await docUser.update({
       'image': urlDownload,
@@ -57,7 +57,7 @@ class _UpdatePhotoState extends State<UpdatePhoto> {
   Widget imgExist() {
     if (kIsWeb) {
       // Display image from bytes if on the web
-      return pickedFile?.bytes != null
+      return pickedFile!.bytes != null
           ? Image.memory(
               pickedFile!.bytes!,
               width: double.infinity,
@@ -187,13 +187,13 @@ class _UpdatePhotoState extends State<UpdatePhoto> {
     final snapshot = await uploadTask!.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
     print('Download Link: $urlDownload');
-    updateDatabase(urlDownload, context);
-    /*
+    // updateDatabase(urlDownload, context);
+
     setState(() {
       urlFile = urlDownload;
       uploadTask = null;
     });
-    */
+
   }
 
   Widget buildProgress() => StreamBuilder(
@@ -209,6 +209,7 @@ class _UpdatePhotoState extends State<UpdatePhoto> {
         },
       );
 
+  
   Widget progressBar(progress) => SizedBox(
         height: 50,
         child: Stack(
