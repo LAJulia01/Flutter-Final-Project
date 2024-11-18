@@ -1,4 +1,4 @@
-import 'dart:io' if (dart.library.html) 'dart:html' as html;
+
 import 'dart:io';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -41,7 +41,7 @@ class _UpdatePhotoState extends State<UpdatePhoto> {
   Future updateDatabase(urlDownload, context) async {
     final docUser = FirebaseFirestore.instance
         .collection('Employee')
-        .doc('PpLMLVb8iTbM2gnX9LB0'); //change this path
+        .doc('1CFjIqaNT7NfOlRxHRFB'); //change this path
 
     await docUser.update({
       'image': urlDownload,
