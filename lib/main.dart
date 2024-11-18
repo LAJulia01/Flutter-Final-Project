@@ -1,9 +1,12 @@
-import 'package:final_project/lib/add_data.dart';
 import 'package:final_project/lib/alldata.dart';
 import 'package:final_project/lib/authenticator.dart';
+import 'package:final_project/lib/login.dart';
+import 'package:final_project/lib/page1.dart';
+import 'package:final_project/lib/register.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'lib/firebase_options.dart';
+import 'lib/updatephoto.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +28,7 @@ class MyApp extends StatelessWidget {
         colorSchemeSeed: Color(0xffFFC1CC),
         useMaterial3: true,
       ),
-      home: const AllData(),
+      home: const UpdatePhoto(),
     );
   }
 }

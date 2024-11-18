@@ -1,4 +1,4 @@
-import 'package:final_project/lib/firebaseconnection.dart';
+import 'package:final_project/lib/page1.dart';
 import 'package:final_project/lib/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -34,4 +34,6 @@ class _AuthenticatorStateState extends State<Authenticator> {
       ),
     );
   }
+
+
 }
