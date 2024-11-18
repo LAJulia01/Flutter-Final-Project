@@ -26,7 +26,7 @@ dependencies:
   path_provider: ^2.1.4
   image_picker: ^1.1.2
   firebase_core: ^3.6.0
-  intl: ^0.17.0
+  intl: ^0.19.0
   curved_navigation_bar: ^1.0.6
   flutter_switch: ^0.3.2
   cloud_firestore: ^5.5.0
