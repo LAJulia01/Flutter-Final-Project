@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "1083795154235",
     "project_id": "flutterdb-e4d59",
-    "storage_bucket": "flutterdb-e4d59.appspot.com"
+    "storage_bucket": "flutterdb-e4d59.firebasestorage.app"
   },
   "client": [
     {
@@ -10,6 +10,25 @@
         "mobilesdk_app_id": "1:1083795154235:android:549f71efc4335d7bb5431e",
         "android_client_info": {
           "package_name": "com.example.module2_4_lab_exercise"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjpzPLZjIjMDL8ByMkWRkHTMmKo5D0w_Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1083795154235:android:ead01903fd4dfbf5b5431e",
+        "android_client_info": {
+          "package_name": "com.example.nannycare"
         }
       },
       "oauth_client": [],

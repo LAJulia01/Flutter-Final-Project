@@ -1,8 +1,3 @@
-import 'package:final_project/lib/alldata.dart';
-import 'package:final_project/lib/authenticator.dart';
-import 'package:final_project/lib/login.dart';
-import 'package:final_project/lib/page1.dart';
-import 'package:final_project/lib/register.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'lib/firebase_options.dart';
@@ -13,6 +8,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  
   runApp(const MyApp());
 }
 

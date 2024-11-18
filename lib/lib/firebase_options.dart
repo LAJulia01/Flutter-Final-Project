@@ -46,16 +46,16 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1083795154235',
     projectId: 'flutterdb-e4d59',
     authDomain: 'flutterdb-e4d59.firebaseapp.com',
-    storageBucket: 'flutterdb-e4d59.appspot.com',
+    storageBucket: 'flutterdb-e4d59.firebasestorage.app',
     measurementId: 'G-Z8THNLCPJ6',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDjpzPLZjIjMDL8ByMkWRkHTMmKo5D0w_Q',
-    appId: '1:1083795154235:android:549f71efc4335d7bb5431e',
+    appId: '1:1083795154235:android:ead01903fd4dfbf5b5431e',
     messagingSenderId: '1083795154235',
     projectId: 'flutterdb-e4d59',
-    storageBucket: 'flutterdb-e4d59.appspot.com',
+    storageBucket: 'flutterdb-e4d59.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -63,7 +63,7 @@ class DefaultFirebaseOptions {
     appId: '1:1083795154235:ios:3e43d37d021bde90b5431e',
     messagingSenderId: '1083795154235',
     projectId: 'flutterdb-e4d59',
-    storageBucket: 'flutterdb-e4d59.appspot.com',
+    storageBucket: 'flutterdb-e4d59.firebasestorage.app',
     iosBundleId: 'com.example.module24LabExercise',
   );
 
@@ -72,17 +72,17 @@ class DefaultFirebaseOptions {
     appId: '1:1083795154235:ios:3e43d37d021bde90b5431e',
     messagingSenderId: '1083795154235',
     projectId: 'flutterdb-e4d59',
-    storageBucket: 'flutterdb-e4d59.appspot.com',
+    storageBucket: 'flutterdb-e4d59.firebasestorage.app',
     iosBundleId: 'com.example.module24LabExercise',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
     apiKey: 'AIzaSyBNiT4Xuv9vlUbkWA7CT3X5Izok6IVRMbg',
-    appId: '1:1083795154235:web:d2d70145caf15ab6b5431e',
+    appId: '1:1083795154235:web:bd873d7beb1ce5f9b5431e',
     messagingSenderId: '1083795154235',
     projectId: 'flutterdb-e4d59',
     authDomain: 'flutterdb-e4d59.firebaseapp.com',
-    storageBucket: 'flutterdb-e4d59.appspot.com',
-    measurementId: 'G-QB3DK0J0EM',
+    storageBucket: 'flutterdb-e4d59.firebasestorage.app',
+    measurementId: 'G-08EQ48LDK4',
   );
 }
