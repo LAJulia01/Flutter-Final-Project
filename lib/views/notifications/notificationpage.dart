@@ -57,14 +57,6 @@ class _NotificationsPageState extends State<NotificationsPage>
               fontSize: 24,
               fontFamily: 'poppins',
             )),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.close),
-            onPressed: () {
-              Navigator.pop(context); // Go back to the previous page
-            },
-          ),
-        ],
       ),
       body: Container(
         margin: const EdgeInsets.all(15),

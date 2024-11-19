@@ -4,14 +4,15 @@ import '../Model/userReviews.dart';
 import '../styles.dart';
 
 class ReviewsInfo extends StatelessWidget {
-  const ReviewsInfo(
-      {super.key, required this.width, required this.userReviews});
+  ReviewsInfo({super.key, required this.width, required this.userReviews});
 
   final dynamic width;
   final UserReviews userReviews;
+  final ScrollController _scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
+    final double height = MediaQuery.of(context).size.height;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 5),
       width: width / 1.2,
@@ -80,6 +81,20 @@ class ReviewsInfo extends StatelessWidget {
           ),
           const SizedBox(
             height: 15,
+          ),
+          SizedBox(
+            height: height * 0.15,
+            child: GridView.count(
+              controller: _scrollController,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              crossAxisCount: 3,
+              children: <Widget>[
+                Image.asset('assets/marga_image1.jpg'),
+                Image.asset('assets/marga_image1.jpg'),
+                Image.asset('assets/marga_image1.jpg'),
+              ],
+            ),
           ),
           Align(
             alignment: Alignment.centerLeft,

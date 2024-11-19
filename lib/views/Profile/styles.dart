@@ -14,12 +14,14 @@ mixin Styles {
   static headerTextStyle(double size) => TextStyle(
         fontSize: size,
         fontWeight: FontWeight.bold,
+        fontFamily: 'poppins',
         letterSpacing: 2,
       );
 
   static textStyle(double size, final color, final fontWeight) => TextStyle(
         fontSize: size,
         fontWeight: fontWeight,
+        fontFamily: 'poppins',
         color: color,
         decoration: TextDecoration.none,
       );

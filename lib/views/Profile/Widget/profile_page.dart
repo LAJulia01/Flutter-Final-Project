@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nannycare/views/Profile/Widget/CharacteristicInfo.dart';
 import 'package:nannycare/views/Profile/Widget/ReviewsInfo.dart';
 
 import '../Model/userData.dart';
@@ -15,16 +14,30 @@ class ProfilePage extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
 
     Widget titleText(final text) => Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            text,
-            style: Styles.textStyle(
-              25,
-              Colors.black,
-              FontWeight.bold,
+        alignment: Alignment.centerLeft,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              text,
+              style: Styles.textStyle(
+                25,
+                Colors.black,
+                FontWeight.bold,
+              ),
             ),
-          ),
-        );
+            TextButton(
+              onPressed: () {},
+              child: Text(
+                'See All',
+                style: TextStyle(
+                  fontSize: 15,
+                  fontFamily: 'poppins',
+                ),
+              ),
+            ),
+          ],
+        ));
 
     return Container(
       margin: Styles.paddingStyle(25, 10),
@@ -70,6 +83,7 @@ class ProfilePage extends StatelessWidget {
                   Text(
                     'P ${userData.userAccount.hourlyRate}.00/hr',
                     style: const TextStyle(
+                      fontFamily: 'poppins',
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Styles.fontColor,
@@ -86,6 +100,7 @@ class ProfilePage extends StatelessWidget {
             userData.userAccount.description,
             textAlign: TextAlign.justify,
             style: const TextStyle(
+              fontFamily: 'poppins',
               fontSize: 16,
               height: 1.5,
             ),
@@ -112,7 +127,7 @@ class ProfilePage extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          titleText('Availability'),
+          // titleText('Availability'),
           //Code Here Availability
         ],
       ),

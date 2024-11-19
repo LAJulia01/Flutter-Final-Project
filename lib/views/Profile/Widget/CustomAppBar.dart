@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nannycare/views/Profile/Widget/back_button.dart';
 
 import '../styles.dart';
 
@@ -13,12 +12,6 @@ class CustomAppBar extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const CustomBackButton(
-          margin: EdgeInsets.only(top: 20, left: 20),
-        ),
-        const SizedBox(
-          width: 20,
-        ),
         Align(
           alignment: Alignment.center,
           child: Text(
