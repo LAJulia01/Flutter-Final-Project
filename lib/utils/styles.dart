@@ -53,6 +53,11 @@ mixin GlobalStyles {
   static const Color buttonColorbig = Color(0xffFFEFED);
   static const Color buttonColorsmall = Color(0xffF5A7A5);
 
+  btnStyle(btnColor_) => ElevatedButton.styleFrom(
+        backgroundColor: btnColor_,
+        minimumSize: const Size(100, 40),
+      );
+
   /*--  ------------ Padding Styles --------------*/
   static const double defaultPadding = 16.0;
 }
@@ -72,8 +77,4 @@ mixin Styles {
         hintText: hintText_,
         labelText: labelText_,
       ); // InputDecoration
-  btnStyle(btnColor_) => ElevatedButton.styleFrom(
-        backgroundColor: btnColor_,
-        minimumSize: const Size.fromHeight(50),
-      );
 }
