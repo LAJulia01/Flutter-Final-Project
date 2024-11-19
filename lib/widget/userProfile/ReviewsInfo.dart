@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:module2_4_lab_exercise/models/userData.dart';
 import 'package:module2_4_lab_exercise/models/userReviews.dart';
 import 'package:module2_4_lab_exercise/styles.dart';
 
