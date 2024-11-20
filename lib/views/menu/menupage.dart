@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nannycare/auth/loginpage.dart';
+import 'package:nannycare/auth/views/loginpage.dart';
 import 'package:nannycare/views/help_andsupport/helpandsupp_page.dart';
-import 'package:nannycare/views/menu/requirements/requirements_page.dart';
+import 'package:nannycare/views/menu/requirements/requirements1.dart';
 import 'package:nannycare/views/menu/settings/settingspage.dart';
 import 'package:nannycare/views/menu/terms/privacy/PrivacyPolicy.dart';
 import 'package:nannycare/views/menu/terms/privacy/TermsAndCondtionsPage.dart';
@@ -98,7 +98,7 @@ class _MenuPageState extends State<MenuPage> {
                         navigationButton(
                           icon: Icons.edit_rounded,
                           label: 'Edit Profile',
-                          page: FilePage1(),
+                          page: Requirements1(),
                           context: context,
                         ),
                         navigationButton(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nannycare/auth/loginpage.dart';
+import 'package:nannycare/auth/views/choosing.dart';
+import 'package:nannycare/auth/views/loginpage.dart';
 import 'package:nannycare/auth/widgets/option_page.dart';
 import 'package:nannycare/utils/customButton.dart';
 import 'package:nannycare/utils/customTextField.dart';
@@ -126,28 +127,24 @@ class _RegisterPageState extends State<RegisterPage> {
                   const SizedBox(height: 25),
                   // Button to send OTP
                   ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xffF5A7A5), // Button color
-                      shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(30), // Rounded corners
-                      ),
-                      elevation: 5,
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (context) => const Register()),
-                      );
-                    },
-                    child: Text(
-                      'Next',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.black, // Text color
-                      ),
-                    ),
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Choosing()));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    side: BorderSide(width: 1, color: Colors.black),
+                    minimumSize: const Size.fromHeight(54),
+                    backgroundColor: const Color(0xFFF5A7A5),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25)),
                   ),
+                  child: Text(
+                    'Next',
+                    style: const TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'poppins'),
+                  ),
+                ),
                   const SizedBox(height: 20),
                   OrDivider(),
                   const SizedBox(height: 10),

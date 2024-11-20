@@ -34,4 +34,6 @@ mixin GlobalStyles {
   static const secondaryColor = Color.fromARGB(255, 255, 255, 1);
 
   var buttonColorsmall;
+
+  var deepRose;
 }
