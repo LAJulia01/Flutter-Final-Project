@@ -7,6 +7,7 @@ import 'package:nannycare/views/menu/terms/privacy/PrivacyPolicy.dart';
 import 'package:nannycare/views/menu/terms/privacy/TermsAndCondtionsPage.dart';
 import 'package:nannycare/views/menu/widgets/navigation_button_widget.dart';
 import 'package:nannycare/views/menu/widgets/profile_widget.dart';
+import 'package:nannycare/views/transaction/transaction_history_page.dart';
 import 'package:nannycare/views/widgets/bottom_navigation_bar.dart';
 
 import '../../utils/styles/styles1.dart';
@@ -106,6 +107,12 @@ class _MenuPageState extends State<MenuPage> {
                           label: 'Account',
                           page: null,
                           context: null,
+                        ),
+                        navigationButton(
+                          icon: Icons.credit_card,
+                          label: 'Transaction',
+                          page: TransactionHistoryPage(),
+                          context: context,
                         ),
                         navigationButton(
                           icon: Icons.settings_rounded,
