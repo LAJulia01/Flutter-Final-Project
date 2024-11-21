@@ -6,7 +6,7 @@ import 'package:nannycare/views/booking/Request_BookingPage.dart';
 import 'package:nannycare/views/favorite/favoritespage.dart';
 import 'package:nannycare/views/home/mainpage.dart';
 import 'package:nannycare/views/menu/menupage.dart';
-import 'package:nannycare/views/menu/settings/settings/settingspages/notification.dart';
+import 'package:nannycare/views/notifications/notificationpage.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
   final int selectedIndex;
@@ -29,7 +29,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
         page = const MainPage();
         break;
       case 3:
-        page = const NotificationPage();
+        page = const NotificationsPage();
         break;
       case 4:
         page = const MenuPage();

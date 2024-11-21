@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:nannycare/utils/customButton.dart';
+import 'package:nannycare/views/Profile/userProfile.dart';
 import 'package:nannycare/views/home/search/searchpage.dart';
 import 'package:nannycare/views/home/widgets/circle_button_widget.dart';
 import 'package:nannycare/views/message/chat.dart';
@@ -208,9 +209,88 @@ class _MainPageState extends State<MainPage> {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        const Text(
-                          'Add your custom content here...',
-                          style: AppTextStyles.bodyText,
+                        Container(
+                          margin: EdgeInsets.all(10),
+                          child: InkWell(
+                            onTap: () {
+                              setState(() {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => UserProfile()));
+                              });
+                            },
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      width: 50,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                              width: 2,
+                                              color: Color(0xFFF5A7A5))),
+                                      child: CircleAvatar(
+                                        backgroundImage: AssetImage(
+                                            'assets/marga_image1.jpg'),
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 15,
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text('Melissa Guillar',
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                fontFamily: 'poppins',
+                                                fontWeight: FontWeight.w600,
+                                              )),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                'Location:',
+                                                style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontFamily: 'poppins',
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                width: 15,
+                                              ),
+                                              Text('Panabo City')
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                'No. of Transaction:',
+                                                style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontFamily: 'poppins',
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                width: 15,
+                                              ),
+                                              Text('12')
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ],
                     ),
