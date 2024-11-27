@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:nannycare/views/Profile/styles.dart';
 
+import '../../Profile/styles.dart';
+import 'package:flutter/material.dart';
 import '../model/TransactionHistory.dart';
 
 class TransactionInfo extends StatelessWidget {

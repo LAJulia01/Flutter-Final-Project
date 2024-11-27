@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nannycare/auth/views/loginpage.dart';
 import 'package:nannycare/views/help_andsupport/helpandsupp_page.dart';
+import 'package:nannycare/views/menu/accounts/parent/accountparent.dart';
 import 'package:nannycare/views/menu/requirements/requirements1.dart';
 import 'package:nannycare/views/menu/settings/settingspage.dart';
 import 'package:nannycare/views/menu/terms/privacy/PrivacyPolicy.dart';
@@ -105,8 +106,8 @@ class _MenuPageState extends State<MenuPage> {
                         navigationButton(
                           icon: Icons.person_rounded,
                           label: 'Account',
-                          page: null,
-                          context: null,
+                          page: Accountparent(),
+                          context: context,
                         ),
                         navigationButton(
                           icon: Icons.credit_card,

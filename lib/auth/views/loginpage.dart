@@ -3,7 +3,6 @@ import 'package:nannycare/auth/views/authen_page.dart';
 import 'package:nannycare/auth/views/facebook.dart';
 import 'package:nannycare/auth/views/registerscreen.dart';
 import 'package:nannycare/auth/widgets/forget_password.dart';
-import 'package:nannycare/auth/widgets/option_page.dart';
 import 'package:nannycare/utils/customButton.dart';
 import 'package:nannycare/utils/customTextField.dart';
 import 'package:nannycare/utils/styles/style/textstyle.dart';

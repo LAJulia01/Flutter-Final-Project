@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:nannycare/views/menu/menupage.dart';
+import 'package:nannycare/views/menu/requirements/requirements1.dart';
+import 'package:nannycare/views/menu/settings/settingspage.dart';
 
 class Accountparent extends StatelessWidget {
   const Accountparent({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +20,9 @@ class Accountparent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pop(context, MaterialPageRoute(builder: (context) => MenuPage()));
+                  },
                   icon: Icon(Icons.arrow_back_ios_new, size: 24)),
               const Text(
                 'EDIT PROFILE',
@@ -28,7 +34,9 @@ class Accountparent extends StatelessWidget {
                 ),
               ),
               IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage()));
+                  },
                   icon: const Icon(
                     Icons.settings_rounded,
                     size: 24,
@@ -60,7 +68,9 @@ class Accountparent extends StatelessWidget {
                         ),
                       ),
                       IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => Requirements1()));
+                          },
                           icon: Icon(
                             Icons.edit_rounded,
                             color: Color.fromARGB(255, 233, 110, 151),
@@ -74,7 +84,7 @@ class Accountparent extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 60,
-                      backgroundImage: Image.asset('assets/nica.jpg').image,
+                      backgroundImage: Image.asset('assets/sofia_image1.jpg').image,
                     ),
                   ],
                 ),
@@ -317,6 +327,11 @@ class Accountparent extends StatelessWidget {
           ]),
         ),
       ])),
+    );
+  }
+    Expanded buildDivider() {
+    return const Expanded(
+      child: Divider(),
     );
   }
 }
