@@ -48,6 +48,7 @@ class CcustomTextFieldState extends State<CustomTextField> {
           if (!emailValid) {
             return "Enter Valid Email";
           }
+          return null;
         },
       ),
     );

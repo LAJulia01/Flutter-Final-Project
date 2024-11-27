@@ -51,7 +51,7 @@ class TransactionInfo extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
-                      content: Container(
+                      content: SizedBox(
                         height: MediaQuery.of(context).size.height * .4,
                         child: Column(
                           children: [
@@ -107,7 +107,7 @@ class TransactionInfo extends StatelessWidget {
                                             FontWeight.w800),
                                       ),
                                       Text(
-                                        "${transactionHistory.amount.toStringAsFixed(2)}",
+                                        transactionHistory.amount.toStringAsFixed(2),
                                         style: Styles.textStyle(
                                             13,
                                             Styles.leadingColor,

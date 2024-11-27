@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nannycare/auth/views/choosing.dart';
 import 'package:nannycare/auth/views/loginpage.dart';
-import 'package:nannycare/auth/widgets/option_page.dart';
 import 'package:nannycare/utils/customButton.dart';
 import 'package:nannycare/utils/customTextField.dart';
 import 'package:nannycare/utils/styles/style/textstyle.dart';

@@ -14,7 +14,7 @@ class AlertDialog1State extends State<AlertDialog1> {
         builder: (context) {
           return AlertDialog(
             backgroundColor: Colors.white,
-            content: Container(
+            content: SizedBox(
               height: MediaQuery.of(context).size.height * 0.35,
               child: Column(
                 children: [

@@ -100,6 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                           else if(passwordController1.text.length < 6){
                             return "Password Length Should be more than 6 characters";
                           }
+                          return null;
                         },
                       ),
                     ],
