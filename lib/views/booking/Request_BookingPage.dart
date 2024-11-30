@@ -9,10 +9,10 @@ class BookingRequestPage extends StatefulWidget {
   const BookingRequestPage({super.key});
 
   @override
-  _BookingRequestPageState createState() => _BookingRequestPageState();
+  BookingRequestPageState createState() => BookingRequestPageState();
 }
 
-class _BookingRequestPageState extends State<BookingRequestPage> {
+class BookingRequestPageState extends State<BookingRequestPage> {
   DateTime? selectedDate;
   TimeOfDay? startTime;
   TimeOfDay? endTime;

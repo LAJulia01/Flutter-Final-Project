@@ -4,6 +4,7 @@ import 'package:nannycare/views/Profile/userProfile.dart';
 import 'package:nannycare/views/home/search/searchpage.dart';
 import 'package:nannycare/views/home/widgets/circle_button_widget.dart';
 import 'package:nannycare/views/message/chat.dart';
+import 'package:nannycare/views/message/chathome.dart';
 import 'package:nannycare/views/widgets/bottom_navigation_bar.dart';
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:geolocator/geolocator.dart';
@@ -18,8 +19,8 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  Set<Marker> markers = Set();
-  Set<Circle> circles = Set();
+  Set<Marker> markers = {};
+  Set<Circle> circles = {};
   GoogleMapController? mapController;
   LatLng location = const LatLng(7.313675416878131, 125.67034083922026);
   final CustomInfoWindowController _customInfoWindowController =
@@ -281,7 +282,7 @@ class _MainPageState extends State<MainPage> {
               child: Column(
                 children: [
                   Text(
-                    "Adjust Geofence Radius: ${_radius.toInt()} meters",
+                    "Adjust to show more Babysitters: ${_radius.toInt()} meters",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Slider(
@@ -452,7 +453,7 @@ class _MainPageState extends State<MainPage> {
                   circleButton(
                     context: context,
                     icon: Icons.message_rounded,
-                    targetPage: const Chat(),
+                    targetPage: const Chathome(),
                   ),
                   const SizedBox(height: 10),
 

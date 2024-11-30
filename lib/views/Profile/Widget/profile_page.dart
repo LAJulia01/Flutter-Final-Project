@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nannycare/views/Profile/Widget/ReviewsInfo.dart';
+import 'package:nannycare/views/review/Review_Page.dart';
 
 import '../Model/userData.dart';
 import '../styles.dart';
@@ -27,7 +28,9 @@ class ProfilePage extends StatelessWidget {
               ),
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ReviewPage()));
+              },
               child: Text(
                 'See All',
                 style: TextStyle(

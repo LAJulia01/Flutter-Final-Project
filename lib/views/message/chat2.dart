@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nannycare/views/booking/Request_BookingPage.dart';
 import 'package:nannycare/views/message/chathome.dart';
 
 class Chat2 extends StatelessWidget {
@@ -103,7 +104,12 @@ class _ChatScreenState extends State<ChatScreen> {
         children: [
           IconButton(
             icon: Icon(Icons.add),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => BookingRequestPage()),
+              );
+            },
           ),
           Expanded(
             child: TextField(

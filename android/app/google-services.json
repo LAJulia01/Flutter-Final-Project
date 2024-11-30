@@ -1,29 +1,46 @@
 {
-    "project_info": {
-      "project_number": "1083795154235",
-      "project_id": "flutterdb-e4d59",
-      "storage_bucket": "flutterdb-e4d59.appspot.com"
-    },
-    "client": [
-      {
-        "client_info": {
-          "mobilesdk_app_id": "1:1083795154235:android:549f71efc4335d7bb5431e",
-          "android_client_info": {
-            "package_name": "com.example.module2_4_lab_exercise"
-          }
-        },
-        "oauth_client": [],
-        "api_key": [
-          {
-            "current_key": "AIzaSyDjpzPLZjIjMDL8ByMkWRkHTMmKo5D0w_Q"
-          }
-        ],
-        "services": {
-          "appinvite_service": {
-            "other_platform_oauth_client": []
-          }
+  "project_info": {
+    "project_number": "943794387340",
+    "project_id": "nanny-cares",
+    "storage_bucket": "nanny-cares.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:943794387340:android:8d83fc62048e2c78077ea9",
+        "android_client_info": {
+          "package_name": "com.example.nannycare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "943794387340-cl8r3jfl2k0e2jh6odem20u468f0tuqh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCnUutysCt6jOIOU74g_HwFpOLLWL4ENM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "943794387340-cl8r3jfl2k0e2jh6odem20u468f0tuqh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "943794387340-l8gu4go1ick8jgct5280ui02qsang9lu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.nannycare"
+              }
+            }
+          ]
         }
       }
-    ],
-    "configuration_version": "1"
-  }
+    }
+  ],
+  "configuration_version": "1"
+}

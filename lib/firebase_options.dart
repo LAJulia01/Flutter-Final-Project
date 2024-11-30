@@ -3,23 +3,27 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
+  
+    
 
-/// Default [FirebaseOptions] for use with your Firebase apps.
-///
-/// Example:
-/// ```dart
-/// import 'firebase_options.dart';
-/// // ...
-/// await Firebase.initializeApp(
-///   options: DefaultFirebaseOptions.currentPlatform,
-/// );
-/// ```
+// / Default [FirebaseOptions] for use with your Firebase apps.
+// /
+// / Example:
+// / ```dart
+// / import 'firebase_options.dart';
+// / // ...
+// / await Firebase.initializeApp(
+// /   options: DefaultFirebaseOptions.currentPlatform,
+// / );
+// / ```
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
       return web;
     }
+    
     switch (defaultTargetPlatform) {
+      
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
@@ -37,52 +41,54 @@ class DefaultFirebaseOptions {
         throw UnsupportedError(
           'DefaultFirebaseOptions are not supported for this platform.',
         );
+        
     }
+    
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBNiT4Xuv9vlUbkWA7CT3X5Izok6IVRMbg',
-    appId: '1:1083795154235:web:452e1a4e42cac847b5431e',
-    messagingSenderId: '1083795154235',
-    projectId: 'flutterdb-e4d59',
-    authDomain: 'flutterdb-e4d59.firebaseapp.com',
-    storageBucket: 'flutterdb-e4d59.appspot.com',
-    measurementId: 'G-Z8THNLCPJ6',
+    apiKey: 'AIzaSyCkpLpyB2YM6Och6fkQEZsbtkjEbOa7AjA',
+    appId: '1:943794387340:web:36409edea26a6d89077ea9',
+    messagingSenderId: '943794387340',
+    projectId: 'nanny-cares',
+    authDomain: 'nanny-cares.firebaseapp.com',
+    storageBucket: 'nanny-cares.firebasestorage.app',
+    measurementId: 'G-VN48MP877H',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDjpzPLZjIjMDL8ByMkWRkHTMmKo5D0w_Q',
-    appId: '1:1083795154235:android:549f71efc4335d7bb5431e',
-    messagingSenderId: '1083795154235',
-    projectId: 'flutterdb-e4d59',
-    storageBucket: 'flutterdb-e4d59.appspot.com',
+    apiKey: 'AIzaSyDCnUutysCt6jOIOU74g_HwFpOLLWL4ENM',
+    appId: '1:943794387340:android:8d83fc62048e2c78077ea9',
+    messagingSenderId: '943794387340',
+    projectId: 'nanny-cares',
+    storageBucket: 'nanny-cares.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyD24Dse5YgYN6DZJ5wytZBT6Y1zOiv6qig',
-    appId: '1:1083795154235:ios:3e43d37d021bde90b5431e',
-    messagingSenderId: '1083795154235',
-    projectId: 'flutterdb-e4d59',
-    storageBucket: 'flutterdb-e4d59.appspot.com',
-    iosBundleId: 'com.example.module24LabExercise',
+    apiKey: 'AIzaSyCpoIdbDqV2HiSZEAvYT8MxR1cK9-r_dgo',
+    appId: '1:943794387340:ios:a89bba59db5dbfc4077ea9',
+    messagingSenderId: '943794387340',
+    projectId: 'nanny-cares',
+    storageBucket: 'nanny-cares.firebasestorage.app',
+    iosBundleId: 'com.example.nannycare',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyD24Dse5YgYN6DZJ5wytZBT6Y1zOiv6qig',
-    appId: '1:1083795154235:ios:3e43d37d021bde90b5431e',
-    messagingSenderId: '1083795154235',
-    projectId: 'flutterdb-e4d59',
-    storageBucket: 'flutterdb-e4d59.appspot.com',
-    iosBundleId: 'com.example.module24LabExercise',
+    apiKey: 'AIzaSyCpoIdbDqV2HiSZEAvYT8MxR1cK9-r_dgo',
+    appId: '1:943794387340:ios:a89bba59db5dbfc4077ea9',
+    messagingSenderId: '943794387340',
+    projectId: 'nanny-cares',
+    storageBucket: 'nanny-cares.firebasestorage.app',
+    iosBundleId: 'com.example.nannycare',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyBNiT4Xuv9vlUbkWA7CT3X5Izok6IVRMbg',
-    appId: '1:1083795154235:web:d2d70145caf15ab6b5431e',
-    messagingSenderId: '1083795154235',
-    projectId: 'flutterdb-e4d59',
-    authDomain: 'flutterdb-e4d59.firebaseapp.com',
-    storageBucket: 'flutterdb-e4d59.appspot.com',
-    measurementId: 'G-QB3DK0J0EM',
+    apiKey: 'AIzaSyCkpLpyB2YM6Och6fkQEZsbtkjEbOa7AjA',
+    appId: '1:943794387340:web:8d41497508fa02c3077ea9',
+    messagingSenderId: '943794387340',
+    projectId: 'nanny-cares',
+    authDomain: 'nanny-cares.firebaseapp.com',
+    storageBucket: 'nanny-cares.firebasestorage.app',
+    measurementId: 'G-PYV2QDT6MC',
   );
 }

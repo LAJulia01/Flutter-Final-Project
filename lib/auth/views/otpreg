@@ -1,0 +1,302 @@
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:nannycare/auth/views/choosing.dart';
+
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
+
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController contactController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController otpController = TextEditingController();
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  final _formKey = GlobalKey<FormState>();
+  bool isLoading = false;
+  bool _passwordVisible = false;
+  String? errorMessage;
+  String? _verificationId;
+
+  // Function to send OTP
+  Future<void> sendOtp() async {
+    if (contactController.text.isEmpty) {
+      setState(() {
+        errorMessage = "Please enter your contact number.";
+      });
+      return;
+    }
+
+    setState(() {
+      isLoading = true;
+      errorMessage = null;
+    });
+
+    try {
+      await _auth.verifyPhoneNumber(
+        phoneNumber: '+${contactController.text.trim()}',
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          // Auto-sign-in
+          await _auth.signInWithCredential(credential);
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          setState(() {
+            errorMessage = e.message;
+          });
+        },
+        codeSent: (String verificationId, int? resendToken) {
+          setState(() {
+            _verificationId = verificationId;
+          });
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('OTP has been sent!')),
+          );
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {
+          setState(() {
+            _verificationId = verificationId;
+          });
+        },
+      );
+    } catch (e) {
+      setState(() {
+        errorMessage = 'Failed to send OTP: ${e.toString()}';
+      });
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  // Function to verify OTP and register user
+  Future<void> verifyOtpAndRegister() async {
+    if (_formKey.currentState!.validate()) {
+      if (_verificationId == null || otpController.text.isEmpty) {
+        setState(() {
+          errorMessage = "Please enter a valid OTP.";
+        });
+        return;
+      }
+
+      setState(() {
+        isLoading = true;
+        errorMessage = null;
+      });
+
+      try {
+        // Verify the OTP
+        PhoneAuthCredential phoneCredential = PhoneAuthProvider.credential(
+          verificationId: _verificationId!,
+          smsCode: otpController.text.trim(),
+        );
+
+        // Create user with email/password
+        UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim(),
+        );
+
+        // Link the phone credential to the email account
+        await userCredential.user?.linkWithCredential(phoneCredential);
+
+        // Save user details to Firestore
+        await _firestore.collection('users').doc(userCredential.user!.uid).set({
+          'name': usernameController.text.trim(),
+          'contact': contactController.text.trim(),
+          'email': emailController.text.trim(),
+        });
+
+        // Navigate to the next screen
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Choosing()),
+        );
+      } on FirebaseAuthException catch (e) {
+        setState(() {
+          errorMessage = e.message;
+        });
+      } finally {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              width: 500,
+              child: Image.asset('assets/NANNY’S CARE (4).png'),
+            ),
+            Text(
+              'Register',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFFF5A7A5),
+              ),
+            ),
+            const SizedBox(height: 30),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 32),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: usernameController,
+                      decoration: InputDecoration(
+                        hintText: 'Name:',
+                        prefixIcon: const Icon(Icons.people),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Name is required';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 15),
+                    TextFormField(
+                      controller: emailController,
+                      decoration: InputDecoration(
+                        hintText: 'Email Address:',
+                        prefixIcon: const Icon(Icons.email),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Email is required';
+                        } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                          return 'Enter a valid email address';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 15),
+                    TextFormField(
+                      controller: passwordController,
+                      obscureText: !_passwordVisible,
+                      decoration: InputDecoration(
+                        hintText: 'Password:',
+                        prefixIcon: const Icon(Icons.lock),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _passwordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _passwordVisible = !_passwordVisible;
+                            });
+                          },
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Password is required';
+                        } else if (value.length < 6) {
+                          return 'Password must be at least 6 characters';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 15),
+                    TextFormField(
+                      controller: contactController,
+                      decoration: InputDecoration(
+                        hintText: 'Contact Number (with country code):',
+                        prefixIcon: const Icon(Icons.phone),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Contact number is required';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    ElevatedButton(
+                      onPressed: sendOtp,
+                      child: const Text('Send OTP'),
+                    ),
+                    const SizedBox(height: 15),
+                    TextFormField(
+                      controller: otpController,
+                      decoration: InputDecoration(
+                        hintText: 'Enter OTP:',
+                        prefixIcon: const Icon(Icons.security),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'OTP is required';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 25),
+                    if (errorMessage != null)
+                      Text(
+                        errorMessage!,
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                    const SizedBox(height: 15),
+                    isLoading
+                        ? const CircularProgressIndicator()
+                        : ElevatedButton(
+                            onPressed: verifyOtpAndRegister,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFFF5A7A5),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                              minimumSize: const Size.fromHeight(54),
+                            ),
+                            child: const Text(
+                              'Register',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'poppins',
+                              ),
+                            ),
+                          ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
