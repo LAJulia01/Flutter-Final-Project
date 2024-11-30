@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nannycare/utils/customButton.dart';
 import 'package:nannycare/views/Profile/userProfile.dart';
 import 'package:nannycare/views/home/search/searchpage.dart';
 import 'package:nannycare/views/home/widgets/circle_button_widget.dart';
-import 'package:nannycare/views/message/chat.dart';
 import 'package:nannycare/views/message/chathome.dart';
 import 'package:nannycare/views/widgets/bottom_navigation_bar.dart';
 import 'package:custom_info_window/custom_info_window.dart';
@@ -347,7 +345,7 @@ class _MainPageState extends State<MainPage> {
                           ),
                           const SizedBox(height: 10),
                           const Text(
-                            'View 143 Results',
+                            'View Results',
                             style: AppTextStyles.header,
                           ),
                         ],

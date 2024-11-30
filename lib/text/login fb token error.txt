@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:nannycare/auth/views/authen_page.dart';
-import 'package:nannycare/auth/views/registerscreen.dart';
-import 'package:nannycare/auth/widgets/customButton.dart';
-import 'package:nannycare/auth/widgets/forget_password.dart';
-import 'package:nannycare/utils/styles/style/textstyle.dart';
-import 'package:nannycare/views/menu/requirements/requirements1.dart';
-// import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -24,78 +19,92 @@ class _LoginPageState extends State<LoginPage> {
   String? errorMessage;
 
   Future<void> loginUser(String email, String password) async {
-    // Show a loading dialog
     showDialog(
       context: context,
       useRootNavigator: false,
       barrierDismissible: false,
-      builder: (context) => const Center(
-        child: CircularProgressIndicator(),
-      ),
+      builder: (context) => const Center(child: CircularProgressIndicator()),
     );
 
     try {
-      // Attempt to sign in with Firebase
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      // Check if the user is successfully signed in
+      Navigator.pop(context); // Close the progress dialog
       if (userCredential.user != null) {
-        // Navigate to the main page
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => AuthenPage()),
+          MaterialPageRoute(builder: (context) => const AuthenPage()),
         );
       }
     } on FirebaseAuthException catch (e) {
-      // Dismiss the dialog and set the error message
-      Navigator.pop(context);
+      Navigator.pop(context); // Close the progress dialog
       setState(() {
         errorMessage = e.message ?? "An error occurred. Please try again.";
       });
     }
   }
 
-Future<void> signInWithGoogle() async {
-  try {
-    final GoogleSignIn googleSignIn = GoogleSignIn();
+  Future<void> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      if (googleUser != null) {
+        final GoogleSignInAuthentication googleAuth =
+            await googleUser.authentication;
 
-    // Check if there is an active Google session
-    if (await googleSignIn.isSignedIn()) {
-      // Disconnect the current session
-      await googleSignIn.disconnect();
+        final OAuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+
+        await FirebaseAuth.instance.signInWithCredential(credential);
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const AuthenPage()),
+        );
+      }
+    } catch (e) {
+      setState(() {
+        errorMessage = "Google Sign-In failed: ${e.toString()}";
+      });
     }
+  }
 
-    // Trigger the Google Sign-In flow
-    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
-
-    if (googleUser != null) {
-      // Obtain the Google Sign-In authentication details
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-
-      // Create a credential for Firebase authentication
-      final OAuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
+Future<void> signInWithFacebook() async {
+  try {
+    final LoginResult result = await FacebookAuth.instance.login();
+    if (result.status == LoginStatus.success) {
+      // Use result.accessToken to get the token
+      final OAuthCredential credential = FacebookAuthProvider.credential(
+        result.accessToken! as String, // Updated way to access token
       );
 
-      // Authenticate with Firebase using the Google credentials
       await FirebaseAuth.instance.signInWithCredential(credential);
 
-      // Navigate to the authenticated page
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => AuthenPage()),
+        MaterialPageRoute(builder: (context) => const AuthenPage()),
       );
+    } else if (result.status == LoginStatus.cancelled) {
+      setState(() {
+        errorMessage = "Facebook Login cancelled by the user.";
+      });
+    } else {
+      setState(() {
+        errorMessage = "Facebook Login failed: ${result.message}";
+      });
     }
   } catch (e) {
     setState(() {
-      errorMessage = "Google Sign-In failed: ${e.toString()}";
+      errorMessage = "An error occurred during Facebook Login: $e";
     });
   }
 }
+
 
   @override
   Widget build(BuildContext context) {
@@ -107,9 +116,13 @@ Future<void> signInWithGoogle() async {
             width: 300,
             child: Image.asset('assets/NANNY’S CARE (4).png'),
           ),
-          Text(
+          const Text(
             'Login',
-            style: AppTextStyles.subHeader.copyWith(color: const Color(0xFFF5A7A5)),
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFFF5A7A5),
+            ),
           ),
           const SizedBox(height: 10),
           Container(
@@ -131,7 +144,8 @@ Future<void> signInWithGoogle() async {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Email is required';
-                          } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                          } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
+                              .hasMatch(value)) {
                             return 'Enter a valid email address';
                           }
                           return null;
@@ -142,27 +156,24 @@ Future<void> signInWithGoogle() async {
                         obscureText: passToggle,
                         controller: passwordController1,
                         decoration: InputDecoration(
-                          enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                            color: Color.fromARGB(255, 255, 200, 210),
-                          )),
                           border: const OutlineInputBorder(),
                           hintText: 'Password',
                           suffix: InkWell(
-                              onTap: () {
-                                setState(() {
-                                  passToggle = !passToggle;
-                                });
-                              },
-                              child: Icon(passToggle
-                                  ? Icons.visibility
-                                  : Icons.visibility_off)),
+                            onTap: () {
+                              setState(() {
+                                passToggle = !passToggle;
+                              });
+                            },
+                            child: Icon(passToggle
+                                ? Icons.visibility
+                                : Icons.visibility_off),
+                          ),
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Enter Password";
-                          } else if (passwordController1.text.length < 6) {
-                            return "Password Length Should be more than 6 characters";
+                          } else if (value.length < 6) {
+                            return "Password length should be more than 6 characters";
                           }
                           return null;
                         },
@@ -174,23 +185,9 @@ Future<void> signInWithGoogle() async {
                 if (errorMessage != null)
                   Text(
                     errorMessage!,
-                    style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                        color: Colors.red, fontWeight: FontWeight.bold),
                   ),
-                const SizedBox(height: 5),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ForgetPassword()));
-                    },
-                    child: Text(
-                      'Forgot Password?',
-                      style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                ),
                 const SizedBox(height: 5),
                 ElevatedButton(
                   onPressed: () {
@@ -206,7 +203,8 @@ Future<void> signInWithGoogle() async {
                     minimumSize: const Size.fromHeight(54),
                     backgroundColor: const Color(0xFFF5A7A5),
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25)),
+                      borderRadius: BorderRadius.circular(25),
+                    ),
                   ),
                   child: const Text(
                     'Login',
@@ -217,23 +215,16 @@ Future<void> signInWithGoogle() async {
                   ),
                 ),
                 const SizedBox(height: 10),
-                const OrDivider(),
-                const SizedBox(height: 10),
                 InkWell(
-                  onTap: signInWithGoogle, // Google Sign-In functionality
+                  onTap: signInWithGoogle,
                   child: buildSocialButton(Icons.mail, Colors.pink, 'GOOGLE'),
                 ),
                 const SizedBox(height: 10),
-
                 InkWell(
-                  onTap: () {},
-                  child: buildSocialButton(Icons.facebook, Colors.blue, 'FACEBOOK'),
+                  onTap: signInWithFacebook,
+                  child:
+                      buildSocialButton(Icons.facebook, Colors.blue, 'FACEBOOK'),
                 ),
-                const SizedBox(height: 40),
-                footerTitle(() {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => RegisterPage()));
-                }, 'Not Registered yet?', 'REGISTER'),
               ],
             ),
           ),
@@ -242,27 +233,30 @@ Future<void> signInWithGoogle() async {
     );
   }
 
-  Widget buildSocialButton(dynamic icon, colorVal, final name) => Container(
+  Widget buildSocialButton(IconData icon, Color color, String name) => Container(
         height: 40,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            color: const Color.fromARGB(76, 226, 226, 226)),
+          borderRadius: BorderRadius.circular(5),
+          color: const Color.fromARGB(76, 226, 226, 226),
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              icon,
-              size: 20,
-              color: colorVal,
-            ),
-            const SizedBox(
-              width: 15,
-            ),
+            Icon(icon, size: 20, color: color),
+            const SizedBox(width: 15),
             Text(name),
           ],
         ),
       );
 }
 
+class AuthenPage extends StatelessWidget {
+  const AuthenPage({super.key});
 
-// https://nanny-cares.firebaseapp.com/__/auth/handler
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(child: Text("Welcome to the authenticated page!")),
+    );
+  }
+}

@@ -1,0 +1,277 @@
+import 'package:flutter/material.dart';
+import 'package:nannycare/views/Profile/userProfile.dart';
+import 'package:nannycare/views/home/search/searchpage.dart';
+import 'package:nannycare/views/home/widgets/circle_button_widget.dart';
+import 'package:nannycare/views/message/chathome.dart';
+import 'package:nannycare/views/widgets/bottom_navigation_bar.dart';
+import 'package:custom_info_window/custom_info_window.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '../../utils/styles/styles1.dart';
+
+class MainPage extends StatefulWidget {
+  const MainPage({super.key});
+
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  Set<Marker> markers = {};
+  Set<Circle> circles = {};
+  GoogleMapController? mapController;
+  LatLng location = const LatLng(7.313675416878131, 125.67034083922026);
+  final CustomInfoWindowController _customInfoWindowController =
+      CustomInfoWindowController();
+  String locationMsg = 'Current Location of User';
+  late String lat;
+  late String long;
+  double _radius = 500;
+  bool _areButtonsVisible = true; // default radius for geofence
+
+  final List<LatLng> markerPositions = [
+    LatLng(7.3099, 125.6708),
+    LatLng(7.3141, 125.6653),
+    LatLng(7.3195, 125.6702),
+    LatLng(7.3165, 125.6748),
+    LatLng(7.3153, 125.6692)
+  ];
+
+  BitmapDescriptor? currentLocationIcon;
+
+  Future<void> _loadCustomIcons() async {
+    currentLocationIcon = await BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(), "assets/mylocation.bmp");
+  }
+
+  Future<Position> _getCurrentLocation() async {
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled');
+    }
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error('Location permissions are denied');
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permission');
+    }
+    return await Geolocator.getCurrentPosition();
+  }
+
+  void _addGeofenceCircle(LatLng position) {
+    setState(() {
+      circles = {
+        Circle(
+          circleId: CircleId("geofence"),
+          center: position,
+          radius: _radius,
+          fillColor: Colors.blue.withOpacity(0.3),
+          strokeColor: Colors.blue,
+          strokeWidth: 2,
+        )
+      };
+    });
+    _filterMarkers();
+  }
+
+  void _filterMarkers() {
+    setState(() {
+      markers.clear();
+      for (var position in markerPositions) {
+        final distance = Geolocator.distanceBetween(
+          location.latitude,
+          location.longitude,
+          position.latitude,
+          position.longitude,
+        );
+
+        if (distance <= _radius) {
+          markers.add(
+            Marker(
+              markerId: MarkerId(position.toString()),
+              position: position,
+              icon: BitmapDescriptor.defaultMarker,
+              infoWindow: InfoWindow(title: " ${position.toString()}"),
+              onTap: () {
+                _showProfileDialog();
+              },
+            ),
+          );
+        }
+      }
+    });
+  }
+
+  void addMyMarker(LatLng myLoc) {
+    setState(() {
+      markers.add(
+        Marker(
+          icon: currentLocationIcon ?? BitmapDescriptor.defaultMarker,
+          markerId: const MarkerId('current_location'),
+          position: myLoc,
+          draggable: false,
+          visible: true,
+          infoWindow: const InfoWindow(title: "Your Current Location"),
+        ),
+      );
+      _addGeofenceCircle(myLoc); // Add geofence circle at current location
+    });
+
+    _filterMarkers(); // Filter existing markers based on the radius
+  }
+
+  void _liveLocation() {
+    LocationSettings locationSettings = const LocationSettings(
+      accuracy: LocationAccuracy.high,
+      distanceFilter: 100,
+    );
+    Geolocator.getPositionStream(locationSettings: locationSettings)
+        .listen((Position position) {
+      lat = position.latitude.toString();
+      long = position.longitude.toString();
+      setState(() {
+        location = LatLng(position.latitude, position.longitude);
+        locationMsg = 'Lat: $lat , Long: $long';
+        _customInfoWindowController.googleMapController?.animateCamera(
+            CameraUpdate.newCameraPosition(
+                CameraPosition(target: location, zoom: 15.0)));
+
+        addMyMarker(location);
+      });
+    });
+  }
+
+  void onMapCreated(controller) {
+    setState(() {
+      mapController = controller;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _loadCustomIcons(); // Load custom icons
+    _getCurrentLocation().then((value) {
+      lat = '${value.latitude}';
+      long = '${value.longitude}';
+      setState(() {
+        location = LatLng(value.latitude, value.longitude);
+        locationMsg = 'Lat: $lat , Long: $long';
+        _addGeofenceCircle(location); // Show the circle immediately
+      });
+      _liveLocation();
+    });
+  }
+
+  void _showProfileDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => const UserProfile(),
+    );
+  }
+
+  Widget loadMap() => Column(
+        children: [
+          Stack(
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).size.height - 180.0,
+                width: double.infinity,
+                child: GoogleMap(
+                  myLocationButtonEnabled: true,
+                  myLocationEnabled: true,
+                  scrollGesturesEnabled: true,
+                  zoomGesturesEnabled: true,
+                  mapType: MapType.normal,
+                  markers: markers,
+                  circles: circles,
+                  initialCameraPosition: CameraPosition(
+                    target: location,
+                    zoom: 15.0,
+                  ),
+                  onTap: (position) {
+                    _customInfoWindowController.hideInfoWindow!();
+                  },
+                  onCameraMove: (position) {
+                    _customInfoWindowController.onCameraMove!();
+                  },
+                  onMapCreated: (GoogleMapController controller) async {
+                    setState(() {
+                      _customInfoWindowController.googleMapController =
+                          controller;
+                    });
+                  },
+                ),
+              ),
+              CustomInfoWindow(
+                controller: _customInfoWindowController,
+                height: 150,
+                width: 250,
+                offset: 50,
+              ),
+            ],
+          ),
+        ],
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      bottomNavigationBar: const CustomBottomNavigationBar(selectedIndex: 2),
+      body: Stack(
+        children: [
+          loadMap(),
+          const Positioned(
+            top: 30,
+            left: 0,
+            right: 0,
+            child: SearchPage(),
+          ),
+          DraggableScrollableSheet(
+            initialChildSize: 0.2,
+            minChildSize: 0.2,
+            maxChildSize: 1.0,
+            builder: (context, scrollController) {
+              return Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 10,
+                      offset: Offset(0, -5),
+                    ),
+                  ],
+                ),
+                child: ListView.builder(
+                  controller: scrollController,
+                  itemCount: 10,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      leading: const CircleAvatar(
+                        backgroundImage:
+                            AssetImage('assets/marga_image1.jpg'),
+                      ),
+                      title: Text('Babysitter ${index + 1}'),
+                      subtitle: const Text('Location: Sample City'),
+                    );
+                  },
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
