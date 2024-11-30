@@ -127,30 +127,21 @@ class _MainPageState extends State<MainPage> {
   }
 
   void _liveLocation() {
-    // Configure location settings with a distance filter to optimize updates
     LocationSettings locationSettings = const LocationSettings(
-      accuracy: LocationAccuracy.high, // High accuracy for precise location
-      distanceFilter: 100, // Update only after moving 100 meters
+      accuracy: LocationAccuracy.high,
+      distanceFilter: 100,
     );
-
-    // Start listening to position updates
     Geolocator.getPositionStream(locationSettings: locationSettings)
         .listen((Position position) {
-      // Update latitude and longitude as strings
       lat = position.latitude.toString();
       long = position.longitude.toString();
-
-      // Update the state with the new location and animate the camera
       setState(() {
         location = LatLng(position.latitude, position.longitude);
         locationMsg = 'Lat: $lat , Long: $long';
         _customInfoWindowController.googleMapController?.animateCamera(
-          CameraUpdate.newCameraPosition(
-            CameraPosition(target: location, zoom: 15.0),
-          ),
-        );
+            CameraUpdate.newCameraPosition(
+                CameraPosition(target: location, zoom: 15.0)));
 
-        // Add marker and geofence circle for the new location
         addMyMarker(location);
       });
     });
@@ -162,37 +153,21 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
-@override
-void initState() {
-  super.initState();
+  @override
+  void initState() {
+    super.initState();
 
-  WidgetsBinding.instance.addPostFrameCallback((_) async {
-    await _initialize(); // Perform initialization after the first frame
-  });
-}
-
-// Create a new method for initialization
-  Future<void> _initialize() async {
-    // Load custom icons
-    await _loadCustomIcons();
-
-    // Get the current location and update state
-    try {
-      Position currentPosition = await _getCurrentLocation();
-      lat = '${currentPosition.latitude}';
-      long = '${currentPosition.longitude}';
+    _loadCustomIcons(); // Load custom icons
+    _getCurrentLocation().then((value) {
+      lat = '${value.latitude}';
+      long = '${value.longitude}';
       setState(() {
-        location = LatLng(currentPosition.latitude, currentPosition.longitude);
+        location = LatLng(value.latitude, value.longitude);
         locationMsg = 'Lat: $lat , Long: $long';
+        _addGeofenceCircle(location); // Show the circle immediately
       });
-
-      // Add geofence circle and start live location updates
-      _addGeofenceCircle(location);
       _liveLocation();
-    } catch (e) {
-      // Handle errors gracefully (e.g., permissions denied)
-      debugPrint('Error fetching location: $e');
-    }
+    });
   }
 
   void _showProfileDialog() {
