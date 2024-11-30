@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
+import 'package:nannycare/auth/views/authen_page.dart';
+import 'package:nannycare/auth/views/registerscreen.dart';
+import 'package:nannycare/auth/widgets/customButton.dart';
+import 'package:nannycare/auth/widgets/forget_password.dart';
+import 'package:nannycare/utils/styles/style/textstyle.dart';
+import 'package:nannycare/views/menu/requirements/requirements1.dart';
+// import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -19,92 +24,74 @@ class _LoginPageState extends State<LoginPage> {
   String? errorMessage;
 
   Future<void> loginUser(String email, String password) async {
+    // Show a loading dialog
     showDialog(
       context: context,
       useRootNavigator: false,
       barrierDismissible: false,
-      builder: (context) => const Center(child: CircularProgressIndicator()),
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
     );
 
     try {
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithEmailAndPassword(
+      // Attempt to sign in with Firebase
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      Navigator.pop(context); // Close the progress dialog
+      // Check if the user is successfully signed in
       if (userCredential.user != null) {
-        Navigator.pushReplacement(
+        // Navigate to the main page
+        Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const AuthenPage()),
+          MaterialPageRoute(builder: (context) => AuthenPage()),
         );
       }
     } on FirebaseAuthException catch (e) {
-      Navigator.pop(context); // Close the progress dialog
+      // Dismiss the dialog and set the error message
+      Navigator.pop(context);
       setState(() {
         errorMessage = e.message ?? "An error occurred. Please try again.";
       });
     }
   }
 
-  Future<void> signInWithGoogle() async {
-    try {
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-      if (googleUser != null) {
-        final GoogleSignInAuthentication googleAuth =
-            await googleUser.authentication;
-
-        final OAuthCredential credential = GoogleAuthProvider.credential(
-          accessToken: googleAuth.accessToken,
-          idToken: googleAuth.idToken,
-        );
-
-        await FirebaseAuth.instance.signInWithCredential(credential);
-
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const AuthenPage()),
-        );
-      }
-    } catch (e) {
-      setState(() {
-        errorMessage = "Google Sign-In failed: ${e.toString()}";
-      });
-    }
-  }
-
-Future<void> signInWithFacebook() async {
+Future<void> signInWithGoogle() async {
   try {
-    final LoginResult result = await FacebookAuth.instance.login();
-    if (result.status == LoginStatus.success) {
-      // Use result.accessToken to get the token
-      final OAuthCredential credential = FacebookAuthProvider.credential(
-        result.accessToken!.token, // Updated way to access token
+    // Sign out the current user and disconnect Google account if any
+    await FirebaseAuth.instance.signOut();
+    await GoogleSignIn().disconnect();
+
+    // Trigger the Google Sign-In flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    if (googleUser != null) {
+      // Obtain the Google Sign-In authentication details
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+      // Create a credential for Firebase authentication
+      final OAuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
       );
 
+      // Authenticate with Firebase using the Google credentials
       await FirebaseAuth.instance.signInWithCredential(credential);
 
+      // Navigate to the authenticated page
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const AuthenPage()),
+        MaterialPageRoute(builder: (context) => AuthenPage()),
       );
-    } else if (result.status == LoginStatus.cancelled) {
-      setState(() {
-        errorMessage = "Facebook Login cancelled by the user.";
-      });
-    } else {
-      setState(() {
-        errorMessage = "Facebook Login failed: ${result.message}";
-      });
     }
   } catch (e) {
     setState(() {
-      errorMessage = "An error occurred during Facebook Login: $e";
+      errorMessage = "Google Sign-In failed: ${e.toString()}";
     });
   }
 }
-
 
   @override
   Widget build(BuildContext context) {
@@ -116,13 +103,9 @@ Future<void> signInWithFacebook() async {
             width: 300,
             child: Image.asset('assets/NANNY’S CARE (4).png'),
           ),
-          const Text(
+          Text(
             'Login',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFFF5A7A5),
-            ),
+            style: AppTextStyles.subHeader.copyWith(color: const Color(0xFFF5A7A5)),
           ),
           const SizedBox(height: 10),
           Container(
@@ -144,8 +127,7 @@ Future<void> signInWithFacebook() async {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Email is required';
-                          } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
-                              .hasMatch(value)) {
+                          } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
                             return 'Enter a valid email address';
                           }
                           return null;
@@ -156,24 +138,27 @@ Future<void> signInWithFacebook() async {
                         obscureText: passToggle,
                         controller: passwordController1,
                         decoration: InputDecoration(
+                          enabledBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                            color: Color.fromARGB(255, 255, 200, 210),
+                          )),
                           border: const OutlineInputBorder(),
                           hintText: 'Password',
                           suffix: InkWell(
-                            onTap: () {
-                              setState(() {
-                                passToggle = !passToggle;
-                              });
-                            },
-                            child: Icon(passToggle
-                                ? Icons.visibility
-                                : Icons.visibility_off),
-                          ),
+                              onTap: () {
+                                setState(() {
+                                  passToggle = !passToggle;
+                                });
+                              },
+                              child: Icon(passToggle
+                                  ? Icons.visibility
+                                  : Icons.visibility_off)),
                         ),
                         validator: (value) {
                           if (value!.isEmpty) {
                             return "Enter Password";
-                          } else if (value.length < 6) {
-                            return "Password length should be more than 6 characters";
+                          } else if (passwordController1.text.length < 6) {
+                            return "Password Length Should be more than 6 characters";
                           }
                           return null;
                         },
@@ -185,9 +170,23 @@ Future<void> signInWithFacebook() async {
                 if (errorMessage != null)
                   Text(
                     errorMessage!,
-                    style: const TextStyle(
-                        color: Colors.red, fontWeight: FontWeight.bold),
+                    style: const TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
                   ),
+                const SizedBox(height: 5),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => ForgetPassword()));
+                    },
+                    child: Text(
+                      'Forgot Password?',
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.w500),
+                    ),
+                  ),
+                ),
                 const SizedBox(height: 5),
                 ElevatedButton(
                   onPressed: () {
@@ -203,8 +202,7 @@ Future<void> signInWithFacebook() async {
                     minimumSize: const Size.fromHeight(54),
                     backgroundColor: const Color(0xFFF5A7A5),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25),
-                    ),
+                        borderRadius: BorderRadius.circular(25)),
                   ),
                   child: const Text(
                     'Login',
@@ -215,16 +213,22 @@ Future<void> signInWithFacebook() async {
                   ),
                 ),
                 const SizedBox(height: 10),
+                const OrDivider(),
+                const SizedBox(height: 10),
                 InkWell(
-                  onTap: signInWithGoogle,
+                  onTap: signInWithGoogle, // Google Sign-In functionality
                   child: buildSocialButton(Icons.mail, Colors.pink, 'GOOGLE'),
                 ),
                 const SizedBox(height: 10),
                 InkWell(
-                  onTap: signInWithFacebook,
-                  child:
-                      buildSocialButton(Icons.facebook, Colors.blue, 'FACEBOOK'),
+                  onTap: () {},
+                  child: buildSocialButton(Icons.facebook, Colors.blue, 'FACEBOOK'),
                 ),
+                const SizedBox(height: 40),
+                footerTitle(() {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => RegisterPage()));
+                }, 'Not Registered yet?', 'REGISTER'),
               ],
             ),
           ),
@@ -233,30 +237,27 @@ Future<void> signInWithFacebook() async {
     );
   }
 
-  Widget buildSocialButton(IconData icon, Color color, String name) => Container(
+  Widget buildSocialButton(dynamic icon, colorVal, final name) => Container(
         height: 40,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5),
-          color: const Color.fromARGB(76, 226, 226, 226),
-        ),
+            borderRadius: BorderRadius.circular(5),
+            color: const Color.fromARGB(76, 226, 226, 226)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 20, color: color),
-            const SizedBox(width: 15),
+            Icon(
+              icon,
+              size: 20,
+              color: colorVal,
+            ),
+            const SizedBox(
+              width: 15,
+            ),
             Text(name),
           ],
         ),
       );
 }
 
-class AuthenPage extends StatelessWidget {
-  const AuthenPage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: Text("Welcome to the authenticated page!")),
-    );
-  }
-}
+// https://nanny-cares.firebaseapp.com/__/auth/handler
