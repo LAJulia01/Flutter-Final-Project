@@ -217,7 +217,7 @@ Future<void> signInWithGoogle() async {
                   ),
                 ),
                 const SizedBox(height: 10),
-                const OrDivider(),
+                // const OrDivider(),
                 const SizedBox(height: 10),
                 InkWell(
                   onTap: signInWithGoogle, // Google Sign-In functionality

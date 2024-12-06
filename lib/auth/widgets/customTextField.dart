@@ -7,18 +7,20 @@ class CustomTextField extends StatefulWidget {
     required this.controller,
     required this.hintText,
     required this.icon,
+    required this.labelText,
   });
 
   final bool obscureText;
   final TextEditingController controller;
   final String hintText;
   final IconData icon;
+  final String labelText;
 
   @override
-  State<CustomTextField> createState() => CcustomTextFieldState();
+  State<CustomTextField> createState() => CustomTextFieldState();
 }
 
-class CcustomTextFieldState extends State<CustomTextField> {
+class CustomTextFieldState extends State<CustomTextField> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController1 = TextEditingController();
 
