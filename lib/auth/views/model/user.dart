@@ -3,7 +3,7 @@ class UserData {
   final String fullname;
   final String age;
   final String gender;
-  final String address;
+  late final String address;
   final String name;
   final String password;
   // final String contact;
@@ -48,4 +48,5 @@ class UserData {
       // 'otp': otp,
       'email': email,
     };
+    
 }
