@@ -20,7 +20,7 @@ class _MainPageState extends State<MainPage> {
   Set<Marker> markers = {};
   Set<Circle> circles = {};
   GoogleMapController? mapController;
-  LatLng location = const LatLng(7.313675416878131, 125.67034083922026);
+  LatLng location = const LatLng(7.30870680, 125.68411780);
   final CustomInfoWindowController _customInfoWindowController =
       CustomInfoWindowController();
   String locationMsg = 'Current Location of User';
