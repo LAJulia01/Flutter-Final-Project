@@ -1,14 +1,9 @@
-import 'dart:io';
-import 'package:file_picker/file_picker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:nannycare/auth/widgets/dialogbutton.dart';
-import 'package:nannycare/utils/customButton.dart';
 import 'package:nannycare/models/location/location_mapscreen.dart';
-import 'package:nannycare/views/menu/requirements/requirements2.dart';
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:nannycare/auth/views/model/user.dart';
 
 class Requirements1 extends StatefulWidget {
   const Requirements1({super.key});
@@ -22,10 +17,24 @@ class _Requirements1State extends State<Requirements1> {
   double? latitude;
   double? longitude;
 
+  final _fullnameController = TextEditingController();
+  final _ageController = TextEditingController();
+  final _genderController = TextEditingController();
+  final _addressController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
     _fetchCurrentAddress();
+  }
+
+  @override
+  void dispose() {
+    _fullnameController.dispose();
+    _ageController.dispose();
+    _genderController.dispose();
+    _addressController.dispose();
+    super.dispose();
   }
 
   Future<void> _fetchCurrentAddress() async {
@@ -41,6 +50,7 @@ class _Requirements1State extends State<Requirements1> {
       setState(() {
         currentAddress =
             "${place.street}, ${place.locality}, ${place.administrativeArea}, ${place.country}";
+        _addressController.text = currentAddress;
       });
     } catch (e) {
       setState(() {
@@ -49,71 +59,87 @@ class _Requirements1State extends State<Requirements1> {
     }
   }
 
+  Future<void> _saveUserDataToFirebase() async {
+    if (!_validateInputs()) return;
+
+    final userData = UserData(
+      fullname: _fullnameController.text,
+      age: _ageController.text,
+      gender: _genderController.text,
+      address: _addressController.text,
+      name: "", // Placeholder if required in model
+      password: "", // Placeholder if required in model
+      email: "", // Placeholder if required in model
+    );
+
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .add(userData.toJson());
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('User data saved successfully!')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to save data: $e')),
+      );
+    }
+  }
+
   Future<void> _navigateToMap() async {
     final result = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const GoogleMapsPage()),
     );
-
-    if (result != null) {
+    if (result != null && result is Map<String, dynamic>) {
       setState(() {
         latitude = result['latitude'];
         longitude = result['longitude'];
         currentAddress = result['address'];
+        _addressController.text = currentAddress;
       });
     }
   }
 
-  Future<File> saveFilePermanently(PlatformFile file) async {
-    final appStorage = await getApplicationDocumentsDirectory();
-    final newFile = File('${appStorage.path}/${file.name}');
-    return File(file.path!).copy(newFile.path);
-  }
-
-  void openFile(PlatformFile file) {
-    OpenFile.open(file.path!);
-  }
-
-  Future<void> handleFileSelection() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      allowMultiple: true,
-      type: FileType.custom,
-      allowedExtensions: ['pdf', 'mp4'],
-    );
-
-    if (result != null) {
-      for (var file in result.files) {
-        // Save file permanently (example)
-        await saveFilePermanently(file);
-
-        // Open file (example)
-        openFile(file);
-
-        // Log file details
-        debugPrint('Name: ${file.name}');
-        debugPrint('Size: ${file.size}');
-        debugPrint('Extension: ${file.extension}');
-        debugPrint('Path: ${file.path}');
-      }
+  bool _validateInputs() {
+    if (_fullnameController.text.isEmpty ||
+        _ageController.text.isEmpty ||
+        _genderController.text.isEmpty ||
+        _addressController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please fill out all fields.')),
+      );
+      return false;
     }
+    return true;
+  }
+
+  Widget buildTextField({
+    required String label,
+    required TextEditingController controller,
+    bool readOnly = false,
+    VoidCallback? onTap,
+  }) {
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(labelText: label),
+      readOnly: readOnly,
+      onTap: onTap,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text(
-          'Requirements',
-          style: TextStyle(color: Color.fromARGB(255, 255, 150, 229)),
-        ),
+        title: const Text('Requirements'),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32),
+        padding: const EdgeInsets.all(16.0),
         child: ListView(
           children: [
+            // Profile Picture Section
             const SizedBox(height: 10),
             const Center(
               child: Text(
@@ -149,176 +175,33 @@ class _Requirements1State extends State<Requirements1> {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
             ),
             const SizedBox(height: 5),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Full name:',
-                border: OutlineInputBorder(),
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-              ),
+            buildTextField(
+              label: 'Full name:',
+              controller: _fullnameController,
             ),
-            const SizedBox(height: 5),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Age:',
-                border: OutlineInputBorder(),
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-              ),
+            const SizedBox(height: 10),
+            buildTextField(
+              label: 'Age:',
+              controller: _ageController,
             ),
-            const SizedBox(height: 5),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Gender:',
-                border: OutlineInputBorder(),
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-              ),
+            const SizedBox(height: 10),
+            buildTextField(
+              label: 'Gender:',
+              controller: _genderController,
             ),
-            const SizedBox(height: 5),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Address:',
-                hintText: currentAddress,
-                border: const OutlineInputBorder(),
-              ),
+            const SizedBox(height: 10),
+            buildTextField(
+              label: 'Address:',
+              controller: _addressController,
               readOnly: true,
               onTap: _navigateToMap,
             ),
-            const SizedBox(height: 10),
-            // CustomButton(
-            //   text: 'Next',
-            //   onPressed: () {
-            //     Navigator.of(context).push(
-            //       MaterialPageRoute(builder: (context) => Requirements2()),
-            //     );
-            //   },
-            // ),
             const SizedBox(height: 20),
-            const Text(
-              'Work Experience',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+            ElevatedButton(
+              onPressed: _saveUserDataToFirebase,
+              child: const Text('Save'),
             ),
-            const SizedBox(height: 10),
-            TextField(
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Color.fromARGB(255, 255, 200, 210),
-                  ),
-                ),
-                border: const OutlineInputBorder(),
-                hintText: 'Share your work experience...',
-              ),
-              maxLines: 7,
-            ),
-            // const SizedBox(height: 20),
-            // const Text(
-            //   'Certifications',
-            //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
-            // ),
-            // GestureDetector(
-            //   onTap: handleFileSelection,
-            //   child: Container(
-            //     alignment: Alignment.center,
-            //     width: screenWidth,
-            //     height: 120,
-            //     decoration: BoxDecoration(
-            //       border: Border.all(
-            //         width: 1,
-            //         color: Color.fromARGB(255, 255, 200, 210),
-            //       ),
-            //       borderRadius: BorderRadius.circular(10),
-            //     ),
-            //     child: const Column(
-            //       mainAxisAlignment: MainAxisAlignment.center,
-            //       children: [
-            //         Text(
-            //           'Attach file',
-            //           style: TextStyle(
-            //             fontSize: 20,
-            //             fontWeight: FontWeight.bold,
-            //           ),
-            //         ),
-            //         Icon(
-            //           Icons.upload_file,
-            //           size: 30,
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                Text(
-                  'Have experience caring for children',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  'with special needs.',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            _buildOption('Yes'),
-            const SizedBox(height: 10),
-            _buildOption('No'),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                Text(
-                  'Rate',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            const SizedBox(height: 5),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Amount:',
-                border: OutlineInputBorder(),
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-              ),
-            ),
-            const SizedBox(height: 20),
-            TextField(
-              decoration: InputDecoration(
-                labelText: 'Hours:',
-                border: OutlineInputBorder(),
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-              ),
-            ),
-            const SizedBox(height: 300),
-            const AlertDialog1(),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildOption(String label) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        border: Border.all(
-          width: 1,
-          color: Color.fromARGB(255, 255, 200, 210),
-        ),
-        borderRadius: BorderRadius.circular(5),
-      ),
-      padding: const EdgeInsets.symmetric(vertical: 15),
-      child: Center(
-        child: Text(
-          label,
-          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
     );

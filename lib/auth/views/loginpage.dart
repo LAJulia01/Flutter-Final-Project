@@ -6,7 +6,6 @@ import 'package:nannycare/auth/views/registerscreen.dart';
 import 'package:nannycare/auth/widgets/customButton.dart';
 import 'package:nannycare/auth/widgets/forget_password.dart';
 import 'package:nannycare/utils/styles/style/textstyle.dart';
-import 'package:nannycare/views/menu/requirements/requirements1.dart';
 // import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 class LoginPage extends StatefulWidget {
