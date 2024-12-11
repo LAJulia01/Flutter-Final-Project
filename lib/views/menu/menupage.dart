@@ -156,6 +156,7 @@ class _MenuPageState extends State<MenuPage> {
                             );
                           },
                           child: Center(
+                            
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: const [

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nannycare/views/help_andsupport/helpandsupp_page2.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:nannycare/views/help_andsupport/helpandsupp_page3.dart';
 
 class HelpandSupportPage extends StatelessWidget {
@@ -48,11 +48,20 @@ class HelpSupportScreen extends StatelessWidget {
             SupportButton(
               icon: Icons.email,
               text: 'Send us an E-mail',
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => HelpandsuppPage2()),
-                ); // Navigate to HelpandsuppPage2
+              onTap: () async {
+                final Uri emailUri = Uri(
+                  scheme: 'mailto',
+                  path: 'laurenceabjulia@gmail.com', // Replace with your support email
+                  query: 'subject=&body=', // Optional
+                );
+
+                if (await canLaunchUrl(emailUri)) {
+                  await launchUrl(emailUri);
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Could not open email app')),
+                  );
+                }
               },
             ),
             SizedBox(height: 20),

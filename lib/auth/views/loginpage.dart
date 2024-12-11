@@ -56,7 +56,6 @@ class _LoginPageState extends State<LoginPage> {
       });
     }
   }
-
 Future<void> signInWithGoogle() async {
   try {
     final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -67,34 +66,54 @@ Future<void> signInWithGoogle() async {
       await googleSignIn.disconnect();
     }
 
-    // Trigger the Google Sign-In flow
+    // Trigger the Google Sign-In flow and display the account chooser if the user has multiple accounts
     final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
-    if (googleUser != null) {
-      // Obtain the Google Sign-In authentication details
-      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+    if (googleUser == null) {
+      // The user canceled the sign-in
+      setState(() {
+        errorMessage = "Google Sign-In canceled.";
+      });
+      return;
+    }
 
-      // Create a credential for Firebase authentication
-      final OAuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
+    // Obtain the Google Sign-In authentication details
+    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
-      // Authenticate with Firebase using the Google credentials
-      await FirebaseAuth.instance.signInWithCredential(credential);
+    if (googleAuth.accessToken == null || googleAuth.idToken == null) {
+      setState(() {
+        errorMessage = "Google authentication failed. Please try again.";
+      });
+      return;
+    }
 
-      // Navigate to the authenticated page
+    // Create a credential for Firebase authentication
+    final OAuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    // Authenticate with Firebase using the Google credentials
+    final UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+
+    // Navigate to the authenticated page if successful
+    if (userCredential.user != null) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => AuthenPage()),
       );
     }
+  } on FirebaseAuthException catch (e) {
+    setState(() {
+      errorMessage = "Failed: ${e.message}";
+    });
   } catch (e) {
     setState(() {
-      errorMessage = "Google Sign-In failed: ${e.toString()}";
+      errorMessage = "An unexpected error occurred: $e";
     });
   }
 }
+
 
   @override
   Widget build(BuildContext context) {
