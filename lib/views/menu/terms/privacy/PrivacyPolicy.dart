@@ -19,7 +19,7 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: settingsAppBar(
-        title: 'Settings',
+        title: 'Privacy Policy',
         context: context, 
         style: TextStyle(), 
       ),

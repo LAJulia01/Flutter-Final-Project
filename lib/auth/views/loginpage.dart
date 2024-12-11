@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:nannycare/auth/views/authen_page.dart';
+import 'package:nannycare/auth/views/choosing.dart';
 import 'package:nannycare/auth/views/registerscreen.dart';
 import 'package:nannycare/auth/widgets/customButton.dart';
 import 'package:nannycare/auth/widgets/forget_password.dart';
@@ -45,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
         // Navigate to the main page
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => AuthenPage()),
+          MaterialPageRoute(builder: (context) => Choosing()),
         );
       }
     } on FirebaseAuthException catch (e) {
@@ -56,63 +56,74 @@ class _LoginPageState extends State<LoginPage> {
       });
     }
   }
+    
+
 Future<void> signInWithGoogle() async {
   try {
     final GoogleSignIn googleSignIn = GoogleSignIn();
 
-    // Check if there is an active Google session
+    // Disconnect any active session to ensure a fresh sign-in
     if (await googleSignIn.isSignedIn()) {
-      // Disconnect the current session
       await googleSignIn.disconnect();
     }
 
-    // Trigger the Google Sign-In flow and display the account chooser if the user has multiple accounts
+    // Trigger Google Sign-In
     final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
 
     if (googleUser == null) {
-      // The user canceled the sign-in
-      setState(() {
-        errorMessage = "Google Sign-In canceled.";
-      });
+      // User canceled the sign-in
+      if (mounted) {
+        setState(() {
+          errorMessage = "Google Sign-In canceled.";
+        });
+      }
       return;
     }
 
-    // Obtain the Google Sign-In authentication details
+    // Obtain Google authentication details
     final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
     if (googleAuth.accessToken == null || googleAuth.idToken == null) {
-      setState(() {
-        errorMessage = "Google authentication failed. Please try again.";
-      });
+      if (mounted) {
+        setState(() {
+          errorMessage = "Google authentication failed. Please try again.";
+        });
+      }
       return;
     }
 
-    // Create a credential for Firebase authentication
+    // Create credentials for Firebase
     final OAuthCredential credential = GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
 
-    // Authenticate with Firebase using the Google credentials
-    final UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+    // Authenticate with Firebase
+    final UserCredential userCredential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
 
-    // Navigate to the authenticated page if successful
     if (userCredential.user != null) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => AuthenPage()),
-      );
-    }
+        Navigator.pop(context); // Dismiss the loading dialog
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => Choosing()), // Navigate to Choosing page
+        );
+      }
   } on FirebaseAuthException catch (e) {
-    setState(() {
-      errorMessage = "Failed: ${e.message}";
-    });
+    if (mounted) {
+      setState(() {
+        errorMessage = "Firebase Auth Error: ${e.message}";
+      });
+    }
   } catch (e) {
-    setState(() {
-      errorMessage = "An unexpected error occurred: $e";
-    });
+    if (mounted) {
+      setState(() {
+        errorMessage = "Unexpected Error: $e";
+      });
+    }
   }
 }
+
 
 
   @override
@@ -243,10 +254,10 @@ Future<void> signInWithGoogle() async {
                 ),
                 const SizedBox(height: 10),
 
-                InkWell(
-                  onTap: () {},
-                  child: buildSocialButton(Icons.facebook, Colors.blue, 'FACEBOOK'),
-                ),
+                // InkWell(
+                //   onTap: () {},
+                //   child: buildSocialButton(Icons.facebook, Colors.blue, 'FACEBOOK'),
+                // ),
                 const SizedBox(height: 40),
                 footerTitle(() {
                   Navigator.of(context).push(MaterialPageRoute(

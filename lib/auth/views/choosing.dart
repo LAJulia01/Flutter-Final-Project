@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nannycare/auth/widgets/option_page.dart';
+import 'package:nannycare/babysitter/mainpage2.dart';
 import 'package:nannycare/views/home/mainpage.dart';
 
 class Choosing extends StatefulWidget {
@@ -39,7 +40,7 @@ class _ChoosingState extends State<Choosing> {
                 text: 'Babysitter ',
                 onPressed: () {
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => MainPage()));
+                      MaterialPageRoute(builder: (context) => MainPage2()));
                 }),
           ],
         ),

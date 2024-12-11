@@ -232,6 +232,10 @@ TextFormField(
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => LoginPage()));
                     }, 'Already have an account?', 'LOGIN'),
+                    //             footerTitle(() {
+                    // //   Navigator.of(context).push(MaterialPageRoute(
+                    // //       builder: (context) => TermsAndConditionsPage()));
+                    // // }, 'Already have an account?', 'LOGIN'),
           ],
         ),
       ),

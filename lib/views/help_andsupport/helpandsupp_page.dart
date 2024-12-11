@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:nannycare/views/menu/menupage.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:nannycare/views/help_andsupport/helpandsupp_page3.dart';
+
 
 class HelpandSupportPage extends StatelessWidget {
   const HelpandSupportPage({super.key});
@@ -20,11 +22,12 @@ class HelpSupportScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.pink[100],
+        backgroundColor: const Color(0xFFF5A7A5),
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
-            Navigator.pop(context); // Go back to the previous screen
+            Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => MenuPage())); // Go back to the previous screen
           },
         ),
         title: Text(

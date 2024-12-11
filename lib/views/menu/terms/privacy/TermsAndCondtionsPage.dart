@@ -18,7 +18,7 @@ class _TermsAndConditionsPageState extends State<TermsAndConditionsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: settingsAppBar(
-        title: 'Settings',
+        title: 'Terms and Condition',
         context: context, 
         style: TextStyle(), 
       ),
