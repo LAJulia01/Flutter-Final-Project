@@ -96,7 +96,7 @@ class BookingRequestPageState extends State<BookingRequestPage> {
     if (fcmToken != null) {
       try {
         final response = await http.post(
-          Uri.parse('https://fcm.googleapis.com/fcm/send'),
+          Uri.parse('https://fcm.googleapis.com/v1/projects/nanny-cares/messages:send'),
           headers: {
             'Content-Type': 'application/json',
             'Authorization': 'key=$_fcmServerKey',
@@ -277,7 +277,7 @@ class BookingRequestPageState extends State<BookingRequestPage> {
                 child: Text(
                   'Book Now',
                   style: TextStyle(
-                    color: const Color.fromARGB(255, 0, 0, 0),
+                    color: Colors.black,
                     fontSize: 16,
                     fontFamily: 'Poppins',
                   ),
