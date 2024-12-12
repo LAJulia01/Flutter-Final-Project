@@ -10,6 +10,8 @@ class NotificationsPage extends StatefulWidget {
   State<NotificationsPage> createState() => _NotificationsPageState();
 }
 
+
+
 Widget notificationDetails(
         String text, TextStyle textStyle, double width, Function() functions) =>
     InkWell(
@@ -46,6 +48,7 @@ Widget notificationDetails(
 
 class _NotificationsPageState extends State<NotificationsPage>
     with GlobalStyles {
+      
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;

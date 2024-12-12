@@ -2,11 +2,12 @@
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:nannycare/babysitter/history.dart';
+import 'package:nannycare/babysitter/notificationpage2.dart';
+
 import 'package:nannycare/views/favorite/favoritespage.dart';
 import 'package:nannycare/views/home/mainpage.dart';
 import 'package:nannycare/views/menu/menupage.dart';
-import 'package:nannycare/views/notifications/notificationpage.dart';
+
 
 class navbar2 extends StatelessWidget {
   final int selectedIndex;
@@ -20,8 +21,8 @@ class navbar2 extends StatelessWidget {
     Widget page;
     switch (index) {
       case 0:
-        page = const TransactionHistoryPage();
-        break;
+        // page = const TransactionHistoryPage();
+        // break;
       case 1:
         page = const FavoritesPage();
         break;
@@ -29,7 +30,7 @@ class navbar2 extends StatelessWidget {
         page = const MainPage();
         break;
       case 3:
-        page = const NotificationsPage();
+        page = const NotificationsPage2();
         break;
       case 4:
         page = const MenuPage();
