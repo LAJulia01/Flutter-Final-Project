@@ -20,7 +20,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
     Widget page;
     switch (index) {
       case 0:
-        page = const BookingRequestPage();
+        page = const BookingRequestPage(documentId: '',);
         break;
       case 1:
         page = const FavoritesPage();
