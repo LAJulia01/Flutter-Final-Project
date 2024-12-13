@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:nannycare/views/Profile/Widget/ReviewsInfo.dart';
-import 'package:nannycare/views/review/Review_Page.dart';
-
-import '../Model/userData.dart';
+import 'package:nannycare/auth/views/model/user.dart';
+// import 'package:nannycare/views/Profile/Widget/ReviewsInfo.dart';
+// import 'package:nannycare/views/review/Review_Page.dart';
 import '../styles.dart';
 
 class ProfilePage extends StatelessWidget {
-  ProfilePage({super.key, required this.userData});
+  const ProfilePage({super.key, required this.userData});
 
   final UserData userData;
-  final ScrollController _scrollController = ScrollController();
+  
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
 
     Widget titleText(final text) => Align(
         alignment: Alignment.centerLeft,
@@ -29,7 +27,7 @@ class ProfilePage extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ReviewPage()));
+                // Navigator.push(context, MaterialPageRoute(builder: (context) => ReviewPage()));
               },
               child: Text(
                 'See All',
@@ -72,7 +70,7 @@ class ProfilePage extends StatelessWidget {
                     width: 10,
                   ),
                   Text(
-                    '${userData.userAccount.numofReviews} Reviews',
+                    '${userData.numOfReviews} Reviews',  // Access directly from userData
                     style: Styles.textStyle(
                       15,
                       Styles.fontColor,
@@ -84,7 +82,7 @@ class ProfilePage extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    'P ${userData.userAccount.hourlyRate}.00/hr',
+                    'P ${userData.hourlyRate}.00/hr',  // Access directly from userData
                     style: const TextStyle(
                       fontFamily: 'poppins',
                       fontSize: 18,
@@ -100,7 +98,7 @@ class ProfilePage extends StatelessWidget {
             height: 25,
           ),
           Text(
-            userData.userAccount.description,
+            userData.description,  // Access directly from userData
             textAlign: TextAlign.justify,
             style: const TextStyle(
               fontFamily: 'poppins',
@@ -115,23 +113,23 @@ class ProfilePage extends StatelessWidget {
           const SizedBox(
             height: 15,
           ),
-          SingleChildScrollView(
-            controller: _scrollController,
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: userData.reviewersList.map((userReviews) {
-                return ReviewsInfo(
-                  userReviews: userReviews,
-                  width: width,
-                );
-              }).toList(),
-            ),
-          ),
+          // SingleChildScrollView(
+          //   controller: _scrollController,
+          //   scrollDirection: Axis.horizontal,
+          //   child: Row(
+          //     children: userData.reviewersList.map((userReviews) {
+          //       return ReviewsInfo(
+          //         userReviews: UserReview,
+          //         width: width,
+          //       );
+          //     }).toList(),
+          //   ),
+          // ),
           const SizedBox(
             height: 20,
           ),
           // titleText('Availability'),
-          //Code Here Availability
+          // Code Here Availability (you can add this part if needed)
         ],
       ),
     );

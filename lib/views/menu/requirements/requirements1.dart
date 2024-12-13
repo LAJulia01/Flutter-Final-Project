@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:nannycare/models/location/location_mapscreen.dart';
-import 'package:nannycare/auth/views/model/user.dart';
+import 'package:nannycare/auth/views/model/user.dart'; // Assuming UserData class is here
 
 class Requirements1 extends StatefulWidget {
   const Requirements1({super.key});
@@ -39,12 +39,11 @@ class _Requirements1State extends State<Requirements1> {
 
   Future<void> _fetchCurrentAddress() async {
     try {
-      Position position = await Geolocator.getCurrentPosition();
+      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
       latitude = position.latitude;
       longitude = position.longitude;
 
-      List<Placemark> placemarks =
-          await placemarkFromCoordinates(latitude!, longitude!);
+      List<Placemark> placemarks = await placemarkFromCoordinates(latitude!, longitude!);
       Placemark place = placemarks[0];
 
       setState(() {
@@ -70,12 +69,14 @@ class _Requirements1State extends State<Requirements1> {
       name: "", // Placeholder if required in model
       password: "", // Placeholder if required in model
       email: "", // Placeholder if required in model
+      description: "",  // You can add description if needed
+      hourlyRate: 0.0,  // Default hourly rate, change if needed
+      numOfReviews: 0,  // Default number of reviews
+      reviewersList: [],  // Default empty list
     );
 
     try {
-      await FirebaseFirestore.instance
-          .collection('users')
-          .add(userData.toJson());
+      await FirebaseFirestore.instance.collection('users').add(userData.toJson());
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('User data saved successfully!')),

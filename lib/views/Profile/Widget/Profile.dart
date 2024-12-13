@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nannycare/views/Profile/Model/userData.dart';
+import 'package:nannycare/auth/views/model/user.dart';
+
 
 import '../styles.dart';
 
@@ -18,10 +19,10 @@ class Profile extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          CircleAvatar(
-            backgroundImage: AssetImage(userData.userAccount.img),
-            radius: 180 / 2,
-          ),
+          // CircleAvatar(
+          //   backgroundImage: AssetImage(userData.userAccount.img),
+          //   radius: 180 / 2,
+          // ),
           Positioned(
             top: 130,
             left: 130,

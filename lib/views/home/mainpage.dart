@@ -27,7 +27,7 @@ class _MainPageState extends State<MainPage> {
   late String lat;
   late String long;
   double _radius = 500;
-  bool _areButtonsVisible = true; // default radius for geofence
+  final bool _areButtonsVisible = true; // Visibility for buttons
 
   final List<LatLng> markerPositions = [
     LatLng(7.3099, 125.6708),
@@ -79,7 +79,13 @@ class _MainPageState extends State<MainPage> {
     _filterMarkers();
   }
 
-  // Filter markers based on distance from the center
+void _showProfileDialog() {
+  showDialog(
+    context: context,
+    builder: (context) => const UserProfile(), // You can customize this if needed
+  );
+}
+
   void _filterMarkers() {
     setState(() {
       markers.clear();
@@ -108,23 +114,24 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
-  addMyMarker(LatLng myLoc) {
-    setState(() {
-      markers.add(
-        Marker(
-          icon: currentLocationIcon ?? BitmapDescriptor.defaultMarker,
-          markerId: const MarkerId('current_location'),
-          position: myLoc,
-          draggable: false,
-          visible: true,
-          infoWindow: const InfoWindow(title: "Your Current Location"),
-        ),
-      );
-      _addGeofenceCircle(myLoc); // Add geofence circle at current location
-    });
+addMyMarker(LatLng myLoc) {
+  setState(() {
+    markers.add(
+      Marker(
+        icon: currentLocationIcon ?? BitmapDescriptor.defaultMarker,
+        markerId: const MarkerId('current_location'),
+        position: myLoc,
+        draggable: false,
+        visible: true,
+        infoWindow: const InfoWindow(title: "Your Current Location"),
+      ),
+    );
+    _addGeofenceCircle(myLoc); // Add geofence circle at current location
+  });
 
-    _filterMarkers(); // Filter existing markers based on the radius
-  }
+  _filterMarkers(); // Filter existing markers based on the radius
+}
+
 
   void _liveLocation() {
     // Configure location settings with a distance filter to optimize updates
@@ -140,204 +147,144 @@ class _MainPageState extends State<MainPage> {
       lat = position.latitude.toString();
       long = position.longitude.toString();
 
-      // Update the state with the new location and animate the camera
-      setState(() {
-        location = LatLng(position.latitude, position.longitude);
-        locationMsg = 'Lat: $lat , Long: $long';
-        _customInfoWindowController.googleMapController?.animateCamera(
-          CameraUpdate.newCameraPosition(
-            CameraPosition(target: location, zoom: 15.0),
-          ),
-        );
+      // Check if the widget is still mounted before calling setState()
+      if (mounted) {
+        // Update the state with the new location and animate the camera
+        setState(() {
+          location = LatLng(position.latitude, position.longitude);
+          locationMsg = 'Lat: $lat , Long: $long';
+          _customInfoWindowController.googleMapController?.animateCamera(
+            CameraUpdate.newCameraPosition(
+              CameraPosition(target: location, zoom: 15.0),
+            ),
+          );
 
-        // Add marker and geofence circle for the new location
-        addMyMarker(location);
-      });
+          // Add marker and geofence circle for the new location
+          addMyMarker(location);
+        });
+      }
     });
   }
 
-  void onMapCreated(controller) {
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await _initialize();
+    });
+  }
+
+  Future<void> _initialize() async {
+  // Load custom icons
+  await _loadCustomIcons();
+
+  // Get the current location and update state
+  try {
+    Position currentPosition = await _getCurrentLocation();
+    lat = '${currentPosition.latitude}';
+    long = '${currentPosition.longitude}';
     setState(() {
-      mapController = controller;
+      location = LatLng(currentPosition.latitude, currentPosition.longitude);
+      locationMsg = 'Lat: $lat , Long: $long';
     });
+
+    // Add geofence circle and start live location updates
+    _addGeofenceCircle(location);
+
+    // Add the current location marker
+    addMyMarker(location); // Make sure this adds the marker to the map
+
+    // Start tracking live location updates
+    _liveLocation();
+
+  } catch (e) {
+    // Handle errors gracefully (e.g., permissions denied)
+    debugPrint('Error fetching location: $e');
   }
-
-@override
-void initState() {
-  super.initState();
-
-  WidgetsBinding.instance.addPostFrameCallback((_) async {
-    await _initialize(); // Perform initialization after the first frame
-  });
 }
 
-// Create a new method for initialization
-  Future<void> _initialize() async {
-    // Load custom icons
-    await _loadCustomIcons();
-
-    // Get the current location and update state
-    try {
-      Position currentPosition = await _getCurrentLocation();
-      lat = '${currentPosition.latitude}';
-      long = '${currentPosition.longitude}';
-      setState(() {
-        location = LatLng(currentPosition.latitude, currentPosition.longitude);
-        locationMsg = 'Lat: $lat , Long: $long';
-      });
-
-      // Add geofence circle and start live location updates
-      _addGeofenceCircle(location);
-      _liveLocation();
-    } catch (e) {
-      // Handle errors gracefully (e.g., permissions denied)
-      debugPrint('Error fetching location: $e');
-    }
-  }
-
-  void _showProfileDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => const UserProfile(),
-    );
-  }
-
-  Widget loadMap() => Column(
-        children: [
-          Stack(
-            children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height - 180.0,
-                width: double.infinity,
-                child: GoogleMap(
-                  myLocationButtonEnabled: true,
-                  myLocationEnabled: true,
-                  scrollGesturesEnabled: true,
-                  zoomGesturesEnabled: true,
-                  mapType: MapType.normal,
-                  markers: markers,
-                  circles: circles,
-                  initialCameraPosition: CameraPosition(
-                    target: location,
-                    zoom: 15.0,
-                  ),
-                  onTap: (position) {
-                    _customInfoWindowController.hideInfoWindow!();
-                  },
-                  onCameraMove: (position) {
-                    _customInfoWindowController.onCameraMove!();
-                  },
-                  onMapCreated: (GoogleMapController controller) async {
-                    setState(() {
-                      _customInfoWindowController.googleMapController =
-                          controller;
-                    });
-                  },
-                ),
-              ),
-              CustomInfoWindow(
-                controller: _customInfoWindowController,
-                height: 150,
-                width: 250,
-                offset: 50,
-              ),
-            ],
-          ),
-          // Slider for adjusting radius
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Text("Adjust Geofence Radius: ${_radius.toInt()} meters"),
-                Slider(
-                  min: 100,
-                  max: 2000,
-                  value: _radius,
-                  divisions: 19,
-                  onChanged: (value) {
-                    setState(() {
-                      _radius = value;
-                      _addGeofenceCircle(location); // Update circle radius
-                    });
-                  },
-                ),
-              ],
+Widget loadMap() => Column(
+  children: [
+    Stack(
+      children: [
+        SizedBox(
+          height: MediaQuery.of(context).size.height - 180.0,
+          width: double.infinity,
+          child: GoogleMap(
+            myLocationButtonEnabled: true,
+            myLocationEnabled: true,
+            scrollGesturesEnabled: true,
+            zoomGesturesEnabled: true,
+            mapType: MapType.normal,
+            markers: markers, // Make sure markers are being passed here
+            circles: circles,
+            initialCameraPosition: CameraPosition(
+              target: location,
+              zoom: 15.0,
             ),
+            onTap: (position) {
+              _customInfoWindowController.hideInfoWindow!();
+            },
+            onCameraMove: (position) {
+              _customInfoWindowController.onCameraMove!();
+            },
+            onMapCreated: (GoogleMapController controller) async {
+              setState(() {
+                _customInfoWindowController.googleMapController = controller;
+              });
+            },
+          ),
+        ),
+        CustomInfoWindow(
+          controller: _customInfoWindowController,
+          height: 150,
+          width: 250,
+          offset: 50,
+        ),
+      ],
+    ),
+    // Slider for adjusting radius
+    Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Text("Adjust Geofence Radius: ${_radius.toInt()} meters"),
+          Slider(
+            min: 100,
+            max: 2000,
+            value: _radius,
+            divisions: 19,
+            onChanged: (value) {
+              setState(() {
+                _radius = value;
+                _addGeofenceCircle(location); // Update circle radius
+              });
+            },
           ),
         ],
-      );
-
+      ),
+    ),
+  ],
+);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: const CustomBottomNavigationBar(selectedIndex: 2),
       body: Stack(
         children: [
-          // Google Map Section
           loadMap(),
-
-          // SearchBar Section
           const Positioned(
             top: 30,
             left: 0,
             right: 0,
             child: SearchPage(),
           ),
-
-          // Adjust Geofence Radius Section (Always Visible)
-          Positioned(
-            bottom: 150, // Positioned above the circular buttons
-            left: 10,
-            right: 10,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black26,
-                    blurRadius: 6,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Text(
-                    "Adjust to show more Babysitters: ${_radius.toInt()} meters",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  Slider(
-                    min: 100,
-                    max: 2000,
-                    value: _radius,
-                    divisions: 19,
-                    onChanged: (value) {
-                      setState(() {
-                        _radius = value;
-                        _addGeofenceCircle(location); // Update circle radius
-                      });
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          // DraggableScrollableSheet
           DraggableScrollableSheet(
             initialChildSize: 0.2,
             minChildSize: 0.2,
             maxChildSize: 1.0,
             builder: (context, scrollController) {
-              scrollController.addListener(() {
-                setState(() {
-                  // Show buttons when scrolled up; hide when fully expanded
-                  _areButtonsVisible = scrollController.position.pixels < 50;
-                });
-              });
-
               return Container(
                 decoration: const BoxDecoration(
                   color: Colors.white,
@@ -345,125 +292,22 @@ void initState() {
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20),
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black26,
-                      blurRadius: 10,
-                      offset: Offset(0, -5),
-                    ),
-                  ],
                 ),
                 child: ListView(
                   controller: scrollController,
-                  padding: const EdgeInsets.all(16),
-                  children: [
-                    Center(
-                      child: Column(
-                        children: [
-                          Container(
-                            width: 40,
-                            height: 5,
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFF5A7A5),
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          const Text(
-                            'View Results',
-                            style: AppTextStyles.header,
-                          ),
-                        ],
-                      ),
+                  children: const [
+                    SizedBox(height: 10),
+                    Text(
+                      'View Results',
+                      style: AppTextStyles.header,
+                      textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 20),
-                    // Additional content here...
-                    Container(
-                      margin: const EdgeInsets.all(10),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const UserProfile()),
-                          );
-                        },
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Container(
-                                  width: 50,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      width: 2,
-                                      color: const Color(0xFFF5A7A5),
-                                    ),
-                                  ),
-                                  child: const CircleAvatar(
-                                    backgroundImage:
-                                        AssetImage('assets/marga_image1.jpg'),
-                                  ),
-                                ),
-                                const SizedBox(width: 15),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: const [
-                                      Text(
-                                        'Melissa Guillar',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontFamily: 'poppins',
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            'Location:',
-                                            style: TextStyle(
-                                              fontSize: 15,
-                                              fontFamily: 'poppins',
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                          SizedBox(width: 15),
-                                          Text('Panabo City'),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            'No. of Transaction:',
-                                            style: TextStyle(
-                                              fontSize: 15,
-                                              fontFamily: 'poppins',
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                          SizedBox(width: 15),
-                                          Text('12'),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    // Additional content...
                   ],
                 ),
               );
             },
           ),
-
           // Circular Buttons Section (Fixed at the Bottom)
           Positioned(
             bottom: 30, // Position buttons at the bottom of the screen

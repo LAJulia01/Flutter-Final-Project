@@ -25,7 +25,13 @@ class _GoogleMapsPageState extends State<GoogleMapsPage> {
     } catch (e) {
       setState(() {
         selectedAddress = "Unable to fetch address.";
-      });
+      }
+      );
+      if (mounted) {
+  setState(() {
+    // Your state update logic here
+  });
+}
     }
   }
 

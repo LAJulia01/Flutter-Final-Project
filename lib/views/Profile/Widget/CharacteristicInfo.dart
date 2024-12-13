@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nannycare/views/Profile/Model/userData.dart';
+import 'package:nannycare/auth/views/model/user.dart';
+
 
 import '../styles.dart';
 
@@ -21,7 +22,7 @@ class CharacteristicsInfo extends StatelessWidget {
           Row(
             children: [
               for (var i = 0;
-                  i < userData.userAccount.characteristics.length;
+                  i < userData.description.length;
                   i++)
                 Expanded(
                   child: Container(
@@ -35,7 +36,7 @@ class CharacteristicsInfo extends StatelessWidget {
                     child: Align(
                       alignment: Alignment.center,
                       child: Text(
-                        userData.userAccount.characteristics[i],
+                        userData.description[i],
                         style: const TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,

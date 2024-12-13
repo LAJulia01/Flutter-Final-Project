@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nannycare/views/Profile/Model/userData.dart';
+import 'package:nannycare/auth/views/model/user.dart';
+// import 'package:nannycare/views/Profile/Model/userData.dart';
 
 import '../styles.dart';
 
@@ -13,7 +14,7 @@ class InfoHeader extends StatelessWidget {
     return Column(
       children: [
         Text(
-          userData.userAccount.name,
+          userData.name,
           style: Styles.headerTextStyle(25),
         ),
         const SizedBox(
@@ -25,7 +26,7 @@ class InfoHeader extends StatelessWidget {
           color: Styles.iconColor,
         ),
         Text(
-          userData.userAccount.location,
+          userData.address,
           style: Styles.textStyle(
             15,
             Colors.black,
@@ -46,7 +47,7 @@ class InfoHeader extends StatelessWidget {
               width: 10,
             ),
             Text(
-              userData.userAccount.age,
+              userData.age,
               style: Styles.textStyle(
                 15,
                 Colors.black,
