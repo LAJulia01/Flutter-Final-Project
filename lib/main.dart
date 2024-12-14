@@ -95,7 +95,7 @@ class _MyAppState extends State<MyApp> {
     await flutterLocalNotificationsPlugin.show(
       0, // Notification ID
       'Welcome!', // Notification title
-      'This is a local notification example.', // Notification body
+      'To Nanny Cares.', // Notification body
       notificationDetails,
     );
   }

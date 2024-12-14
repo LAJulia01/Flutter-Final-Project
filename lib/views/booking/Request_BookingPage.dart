@@ -6,9 +6,9 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:nannycare/views/widgets/bottom_navigation_bar.dart';
 
 class BookingRequestPage extends StatefulWidget {
-  final String userId;
+  final String userData;
 
-  const BookingRequestPage({super.key, required this.userId});
+  const BookingRequestPage({super.key, required this.userData});
 
   @override
   State<BookingRequestPage> createState() => BookingRequestPageState();
@@ -60,16 +60,35 @@ class BookingRequestPageState extends State<BookingRequestPage> {
     try {
       await FirebaseFirestore.instance
           .collection('booking_requests')
-          .doc(widget.userId)
+          .doc(widget.userData)
           .update({'status': 'confirmed'});
 
-      // Mark booking as confirmed to update the UI
-      setState(() {
-        _isBookingConfirmed = true;
-        _isLoading = false;
-      });
+      // Fetch the booking details from Firestore
+      final bookingSnapshot = await FirebaseFirestore.instance
+          .collection('booking_requests')
+          .doc(widget.userData)
+          .get();
 
-      debugPrint('Booking confirmed successfully');
+      if (bookingSnapshot.exists) {
+        final bookingData = bookingSnapshot.data();
+        setState(() {
+          selectedDate = bookingData?['date'] != null
+              ? DateTime.parse(bookingData!['date'])
+              : null;
+          startTime = bookingData?['start_time'] != null
+              ? TimeOfDay(
+                  hour: int.parse(bookingData!['start_time'].split(":")[0]),
+                  minute: int.parse(bookingData['start_time'].split(":")[1]),
+                )
+              : null;
+          endTime = bookingData?['end_time'] != null
+              ? TimeOfDay(
+                  hour: int.parse(bookingData!['end_time'].split(":")[0]),
+                  minute: int.parse(bookingData['end_time'].split(":")[1]),
+                )
+              : null;
+        });
+      }
 
       // Show a local notification for booking confirmation
       final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -93,6 +112,14 @@ class BookingRequestPageState extends State<BookingRequestPage> {
         'Your booking has been successfully confirmed.', // Notification body
         notificationDetails,
       );
+
+      // Mark booking as confirmed to update the UI
+      setState(() {
+        _isBookingConfirmed = true;
+        _isLoading = false;
+      });
+
+      debugPrint('Booking confirmed successfully');
     } catch (e) {
       debugPrint('Error confirming booking: $e');
       ScaffoldMessenger.of(context).showSnackBar(
@@ -152,7 +179,7 @@ class BookingRequestPageState extends State<BookingRequestPage> {
 
     FirebaseFirestore.instance
         .collection('booking_requests')
-        .doc(widget.userId)
+        .doc(widget.userData)
         .set({
       'date': selectedDate?.toIso8601String(),
       'start_time': startTime?.format(context),
@@ -223,7 +250,81 @@ class BookingRequestPageState extends State<BookingRequestPage> {
 
   Widget _buildBookingForm() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const Text(
+          'Booking Details',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        InkWell(
+          onTap: () => _selectDate(context),
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  selectedDate != null
+                      ? DateFormat('MM/dd/yyyy').format(selectedDate!)
+                      : 'Select Date',
+                  style: const TextStyle(fontSize: 16),
+                ),
+                const Icon(Icons.calendar_today),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        InkWell(
+          onTap: () => _selectTime(context, true), // For Start Time
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  startTime != null
+                      ? startTime!.format(context)
+                      : 'Select Start Time',
+                  style: const TextStyle(fontSize: 16),
+                ),
+                const Icon(Icons.access_time),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
+        InkWell(
+          onTap: () => _selectTime(context, false), // For End Time
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  endTime != null
+                      ? endTime!.format(context)
+                      : 'Select End Time',
+                  style: const TextStyle(fontSize: 16),
+                ),
+                const Icon(Icons.access_time),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 16),
         TextField(
           controller: addressController,
           decoration: const InputDecoration(
@@ -239,6 +340,7 @@ class BookingRequestPageState extends State<BookingRequestPage> {
             border: OutlineInputBorder(),
           ),
         ),
+        const SizedBox(height: 16),
       ],
     );
   }
