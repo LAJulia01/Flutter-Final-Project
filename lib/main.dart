@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:nannycare/auth/views/loginpage.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,6 +11,19 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+  // Initialize Flutter Local Notifications
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
+  const AndroidInitializationSettings initializationSettingsAndroid =
+      AndroidInitializationSettings('@mipmap/ic_launcher');
+
+  const InitializationSettings initializationSettings =
+      InitializationSettings(android: initializationSettingsAndroid);
+
+  await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
   runApp(const MyApp());
 }
 
@@ -34,6 +48,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     _initializeFCM();
+    _showLocalNotification(); // Call the function to show a local notification
   }
 
   /// This function will initialize Firebase Messaging and retrieve the FCM token
@@ -58,6 +73,31 @@ class _MyAppState extends State<MyApp> {
       });
       print("FCM Token refreshed: $newToken");
     });
+  }
+
+  /// Show a local notification as an example
+  Future<void> _showLocalNotification() async {
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+        FlutterLocalNotificationsPlugin();
+
+    const AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails(
+      'channel_id',
+      'channel_name',
+      channelDescription: 'This is a test channel',
+      importance: Importance.max,
+      priority: Priority.high,
+    );
+
+    const NotificationDetails notificationDetails =
+        NotificationDetails(android: androidNotificationDetails);
+
+    await flutterLocalNotificationsPlugin.show(
+      0, // Notification ID
+      'Welcome!', // Notification title
+      'This is a local notification example.', // Notification body
+      notificationDetails,
+    );
   }
 
   @override

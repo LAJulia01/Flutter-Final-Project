@@ -61,6 +61,7 @@ dependencies:
   googleapis: ^13.2.0
   googleapis_auth: ^1.6.0
   provider: ^6.1.2
+  flutter_local_notifications: ^18.0.1
   # facebook_auth: ^0.0.3
   # flutter_facebook_auth: ^7.1.1
 
