@@ -109,7 +109,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => BookingRequestPage(
-                          userData: '',
+                          documentId: '',
                         )),
               );
             },
