@@ -30,7 +30,7 @@ class navbar2 extends StatelessWidget {
         page = const MainPage();
         break;
       case 3:
-        page = const NotificationPage2(userId: '', payload: '',);
+        page = NotificationPage2();
         break;
       case 4:
         page = const MenuPage();

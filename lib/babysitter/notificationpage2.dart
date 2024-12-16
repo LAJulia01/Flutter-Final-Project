@@ -1,85 +1,95 @@
-import 'dart:convert';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:nannycare/views/menu/widgets/settings_appbar_widget.dart';
-// import 'package:intl/intl.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class NotificationPage2 extends StatefulWidget {
-  final String userId;
-  final String payload;
+class NotificationPage2 extends StatelessWidget {
+  NotificationPage2({super.key});
+  static const route = './notification-screen';
 
-  const NotificationPage2({super.key, required this.userId, required this.payload});
+  // Firestore reference to the 'booking_requests' collection
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  @override
-  _NotificationPage2State createState() => _NotificationPage2State();
-}
-
-class _NotificationPage2State extends State<NotificationPage2> {
-  late Map<String, dynamic> bookingData;
-
-  @override
-  void initState() {
-    super.initState();
-    bookingData = jsonDecode(widget.payload);
+  // Method to fetch booking data from Firestore
+  Future<List<Map<String, dynamic>>> fetchBookingData() async {
+    try {
+      // Fetch all booking requests and return as a list of maps
+      QuerySnapshot snapshot = await _firestore.collection('booking_requests').get();
+      return snapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+    } catch (e) {
+      print('Error fetching booking data: $e');
+      return [];
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (widget.userId.isEmpty) {
-      return Scaffold(
-        appBar: AppBar(title: const Text('Notification')),
-        body: const Center(child: Text('Invalid document ID')),
-      );
-    }
 
     return Scaffold(
-      appBar: settingsAppBar(
-        title: 'Notification',
-        context: context,
-        style: const TextStyle(),
+      appBar: AppBar(
+        title: const Text('Notifications'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildDetailRow('📅 Date:', bookingData['date']),
-            _buildDetailRow('⏰ Start Time:', bookingData['start_time']),
-            _buildDetailRow('⏳ End Time:', bookingData['end_time']),
-            _buildDetailRow('🏠 Address:', bookingData['address']),
-            _buildDetailRow('📝 Notes:', bookingData['notes']),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildDetailRow(String title, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              fontFamily: 'Poppins',
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              value,
-              style: const TextStyle(
-                fontSize: 16,
-                fontFamily: 'Poppins',
-                color: Colors.grey,
+            SizedBox(height: 20),
+            
+            // Fetch and display booking data from Firestore
+            Expanded(
+              child: FutureBuilder<List<Map<String, dynamic>>>(
+                future: fetchBookingData(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error fetching data'));
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return Center(child: Text('No bookings available'));
+                  } else {
+                    final bookings = snapshot.data!;
+                    return ListView.builder(
+                      itemCount: bookings.length,
+                      itemBuilder: (context, index) {
+                        final booking = bookings[index];
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Card(
+                            elevation: 4,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Name: ${booking['name'] ?? 'N/A'}',
+                                    style: TextStyle(
+                                      fontSize: 16, 
+                                      fontWeight: FontWeight.bold
+                                    ),
+                                  ),
+                                  SizedBox(height: 8),
+                                  Text('Schedule Date: ${booking['scheduleDate'] ?? 'N/A'}'),
+                                  Text('Duty Hours: ${booking['dutyHours'] ?? 'N/A'}'),
+                                  Text('Address: ${booking['address'] ?? 'N/A'}'),
+                                  Text('Notes: ${booking['notes'] ?? 'N/A'}'),
+                                  Text('Status: ${booking['status'] ?? 'N/A'}'),
+                                  Text('Created At: ${booking['createdAt']?.toDate().toString() ?? 'N/A'}'),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  }
+                },
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
