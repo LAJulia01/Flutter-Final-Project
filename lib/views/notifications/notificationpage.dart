@@ -120,7 +120,7 @@ class _NotificationsPageState extends State<NotificationsPage>
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              BookingSummary()));
+                                              BookingSummary(booking: {},)));
                                 });
                               },
                               style: btnStyle(GlobalStyles.buttonColorsmall),

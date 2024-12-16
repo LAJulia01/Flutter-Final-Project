@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nannycare/utils/styles.dart';
 
 class BookingSummary extends StatelessWidget with GlobalStyles {
-  BookingSummary({super.key});
+  BookingSummary({super.key, required Map<String, dynamic> booking});
 
   @override
   Widget build(BuildContext context) {
